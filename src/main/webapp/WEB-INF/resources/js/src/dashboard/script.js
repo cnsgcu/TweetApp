@@ -1,0 +1,78 @@
+var bubbles = [  
+	{lat: 39.099727, lng: -92.578567},
+	{lat: 37.099727, lng: -92.578567},
+	{lat: 34.099727, lng: -92.578567},
+	{lat: 32.099727, lng: -92.578567},
+	{lat: 31.099727, lng: -92.578567},
+	{lat: 39.099727, lng: -94.578567}
+];
+
+var map = new Datamap({
+	element: document.getElementById('map'),
+	fills: {
+		defaultFill: "#000"
+	},
+	geographyConfig: {
+        dataUrl: null, //if not null, datamaps will fetch the map JSON (currently only supports topojson)
+        hideAntarctica: true,
+        borderWidth: 1,
+        borderColor: '#222',
+        popupTemplate: function(geography, data) { //this function should just return a string
+        	return '<div class="hoverinfo"><strong>' + geography.properties.name + '</strong></div>';
+        },
+        popupOnHover: true, //disable the popup while hovering
+        highlightOnHover: true,
+        highlightFillColor: '#000',
+        highlightBorderColor: '#333',
+        highlightBorderWidth: 2
+    },
+	scope: 'usa'
+});
+
+map.addPlugin('bigCircle', function ( layer, data ) {
+    var self = this;
+
+    var className = 'bigCircle';
+
+    var bubbles = layer.selectAll(className).data( data, JSON.stringify );
+
+    bubbles.enter()
+		.append('circle')
+		.attr('class', className)
+		.attr('cx', function ( datum ) {
+  			return self.latLngToXY(datum.lat, datum.lng)[0];
+		})
+		.attr('cy', function ( datum ) {
+  			return self.latLngToXY(datum.lat, datum.lng)[1];
+		})
+		.attr('r', 1.5);
+});
+
+map.bigCircle( bubbles );
+
+d3.selectAll('path').style('fill', '#000');
+d3.selectAll('path').style('stroke', '#222');
+
+var dummyBar = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,1,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5,2,3,9,6,5,9,6,5,6,5,6,5,9];
+$("#right-analysis .bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+setInterval(function() {
+	var rand = Math.floor(Math.random() * 9) + 1;
+	
+	dummyBar.push(rand);
+	dummyBar.splice(0, 1);
+	$("#right-analysis .bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+}, 1000);
+
+var dummyLine = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5];
+$("#left-analysis .line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
+
+setInterval(function() {
+	var rand = Math.floor(Math.random() * 9) + 1;
+	
+	dummyLine.push(rand);
+	dummyLine.splice(0, 1);
+	$("#left-analysis .line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
+}, 1000);
+
+var dumPie = [60, 30, 10];
+$(".device-pie").sparkline(dumPie, {type: "pie", width: "50px", height: "50px", offset: "-90"});

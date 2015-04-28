@@ -1,0 +1,178 @@
+html, body
+{
+	margin: 0;
+	height: 100%;
+}
+
+#map
+{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	background: rgb(27, 39, 65);
+}
+
+#right-analysis
+{
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 200px;
+
+	display: flex;
+	flex-direction: column;
+
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#right-analysis > div
+{
+	flex-grow: 1;
+
+	margin: 2px 0;
+	padding: 3px 5px;
+
+	background: rgba(255, 255, 255, 0.1);
+
+	border-radius: 3px;
+	border: 1px solid rgba(255,255,255, 0.3);
+
+	box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.7);
+}
+
+#left-analysis
+{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 170px;
+	height: 100%;
+
+	font-size: 0.58em;
+	padding-left: 5px;
+
+	border-radius: 3px;
+	border: 1px solid rgba(255,255,255, 0.3);
+
+	box-shadow: inset 0 0 5px rgba(255, 255, 255, 0.7);
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+#left-analysis > div > div
+{
+	margin: 1.2px 0;
+}
+
+.bigCircle
+{
+	/*fill: #38e4ff;*/
+	fill: #FBFCD3;
+}
+
+/* Font glows */
+.blue-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #228DFF,
+                 0 0 35px #228DFF,
+                 0 0 40px #228DFF,
+                 0 0 50px #228DFF,
+                 0 0 75px #228DFF;
+
+}
+
+.green-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #B6FF00,
+                 0 0 35px #B6FF00,
+                 0 0 40px #B6FF00,
+                 0 0 50px #B6FF00,
+                 0 0 75px #B6FF00;
+}
+
+.orange-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #FF9900,
+                 0 0 35px #FF9900,
+                 0 0 40px #FF9900,
+                 0 0 50px #FF9900,
+                 0 0 75px #FF9900;
+}
+
+.pink-glow
+{
+	color: #fff;
+	
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #FF1177,
+                 0 0 35px #FF1177,
+                 0 0 40px #FF1177,
+                 0 0 50px #FF1177,
+                 0 0 75px #FF1177;
+}
+
+.red-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px red,
+                 0 0 35px red,
+                 0 0 40px red,
+                 0 0 50px red,
+                 0 0 75px red;
+}
+
+.violet-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #ff00de,
+                 0 0 35px #ff00de,
+                 0 0 40px #ff00de,
+                 0 0 50px #ff00de,
+                 0 0 75px #ff00de;
+}
+
+.white-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px white,
+                 0 0 35px white,
+                 0 0 40px white,
+                 0 0 50px white,
+                 0 0 75px white;
+}
+
+.yellow-glow
+{
+	color: #fff;
+    text-shadow: 0 0 5px #fff,
+   				 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 20px #FFDD1B,
+                 0 0 35px #FFDD1B,
+                 0 0 40px #FFDD1B,
+                 0 0 50px #FFDD1B,
+                 0 0 75px #FFDD1B;
+}

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+    <head lang="en">
+        <meta charset="UTF-8"/>
+
+        <link th:href="@{/resources/css/src/dashboard/style.css}"
+              href="../../resources/css/src/dashboard/style.css"
+              rel="stylesheet" type="text/css"/>
+
+        <script th:src="@{/resources/js/lib/d3/d3.min.js}"
+                src="../../resources/js/lib/d3/d3.js"
+                type="text/javascript">
+        </script>
+
+        <script th:src="@{/resources/js/lib/topojson/topojson.js}"
+                src="../../resources/js/lib/topojson/topojson.js"
+                type="text/javascript">
+        </script>
+        <script th:src="@{/resources/js/lib/datamaps/datamaps.usa.min.js}"
+                src="../../resources/js/lib/datamaps/datamaps.usa.min.js"
+                type="text/javascript">
+        </script>
+
+        <script th:src="@{/resources/js/lib/jquery/jquery-1.11.2.js}"
+                src="../../resources/js/lib/jquery/jquery-1.11.2.js"
+                type="text/javascript">
+        </script>
+        <script th:src="@{/resources/js/lib/sparkline/jquery.sparkline.js}"
+                src="../../resources/js/lib/sparkline/jquery.sparkline.js"
+                type="text/javascript">
+        </script>
+
+        <title>Tweet Dashboard</title>
+    </head>
+
+    <body>
+        <div id="map"></div>
+
+        <div id="right-analysis">
+            <div class="blue-glow">
+                <div style="text-align: center;">Frequency</div>
+
+                <div style="margin: 2px 0;">256 tweets/s</div>
+                <span class="bar"></span>
+
+                <div style="margin: 2px 0;">50 retweet/s</div>
+                <span class="bar"></span>
+            </div>
+
+            <div class="blue-glow">
+                <div style="text-align: center;">Topic</div>
+
+                <div style="margin: 2px 0;">Food</div>
+                <div style="margin: 2px 0;">Vacation</div>
+                <div style="margin: 2px 0;">Spring</div>
+                <div style="margin: 2px 0;">Summer</div>
+                <div style="margin: 2px 0;">Pool</div>
+            </div>
+
+            <div class="blue-glow">
+                <div style="text-align: center;">Device</div>
+
+                <div style="margin: 2px 0;">
+                    <span class="device-pie"></span>
+                </div>
+            </div>
+
+            <div class="blue-glow">
+                <div style="text-align: center;">Language</div>
+
+                <div style="margin: 2px 0;">1. English</div>
+                <div style="margin: 2px 0;">2. Chinese</div>
+                <div style="margin: 2px 0;">3. Spanish</div>
+                <div style="margin: 2px 0;">4. Tagalog</div>
+                <div style="margin: 2px 0;">5. French</div>
+            </div>
+        </div>
+
+        <div id="left-analysis" style="display: flex;">
+            <div class="blue-glow">
+                <div>Alabama</div>
+                <div>Alaska</div>
+                <div>Arizona</div>
+                <div>Arkansas</div>
+                <div>California</div>
+                <div>Colorado</div>
+                <div>Connecticut</div>
+                <div>Delaware</div>
+                <div>Florida</div>
+                <div>Georgia</div>
+                <div>Hawaii</div>
+                <div>Idaho</div>
+                <div>Illinois</div>
+                <div>Indiana</div>
+                <div>Iowa</div>
+                <div>Kansas</div>
+                <div>Kentucky</div>
+                <div>Louisiana</div>
+                <div>Maine</div>
+                <div>Maryland</div>
+                <div>Massachusetts</div>
+                <div>Michigan</div>
+                <div>Minnesota</div>
+                <div>Mississippi</div>
+                <div>Missouri</div>
+                <div>Montana</div>
+                <div>Nebraska</div>
+                <div>Nevada</div>
+                <div>New Hampshire</div>
+                <div>New Jersey</div>
+                <div>New Mexico</div>
+                <div>New York</div>
+                <div>North Carolina</div>
+                <div>North Dakota</div>
+                <div>Ohio</div>
+                <div>Oklahoma</div>
+                <div>Oregon</div>
+                <div>Pennsylvania</div>
+                <div>Rhode Island</div>
+                <div>South Carolina</div>
+                <div>South Dakota</div>
+                <div>Tennessee</div>
+                <div>Texas</div>
+                <div>Utah</div>
+                <div>Vermont</div>
+                <div>Virginia</div>
+                <div>Washington</div>
+                <div>West Virginia</div>
+                <div>Wisconsin</div>
+                <div>Wyoming</div>
+            </div>
+
+            <div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+                <div><span class="line"></span></div>
+            </div>
+        </div>
+
+        <script th:src="@{/resources/js/src/dashboard/script.js}"
+                src="../../resources/js/src/dashboard/script.js"
+                type="text/javascript">
+        </script>
+    </body>
+</html>
