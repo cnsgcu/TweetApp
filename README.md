@@ -21,9 +21,9 @@ To start Zookeeper execute the following command
 
 #### II. Configure MySQL
 
-a. Install MySQL community server edition
+1. Install MySQL community server edition
 
-b. Execute the following statements to create *druid* user and *druid* database
+2. Execute the following statements to create *druid* user and *druid* database
 	```SQL
 	GRANT ALL ON druid.* TO 'druid'@'localhost' IDENTIFIED BY 'diurd';
 	CREATE DATABASE druid DEFAULT CHARACTER SET utf8;
@@ -31,10 +31,10 @@ b. Execute the following statements to create *druid* user and *druid* database
 
 #### III. Apache Kafka
 
-a. Start Kafka server
+1. Start Kafka server
 > bin/kafka-server-start.sh config/server.properties
 
-b. Create a topic
+2. Create a topic
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
 
 #### IV. Druid
@@ -72,14 +72,46 @@ druid.selectors.indexing.serviceName=overlord
 druid.emitter=noop
 ```
 
-a. Start coordinator node
+Realtime runtime.properties
+```properties
+druid.service=realtime
+
+# We can only 1 scan segment in parallel with these configs.
+# Our intermediate buffer is also very small so longer topNs will be slow.
+# In production sizeBytes should be 512mb, and numThreads should be # cores - 1
+druid.processing.buffer.sizeBytes=100000000
+druid.processing.numThreads=1
+
+# Enable Real monitoring
+# druid.monitoring.monitors=["com.metamx.metrics.SysMonitor","com.metamx.metrics.JvmMonitor","io.druid.segment.realtime.RealtimeMetricsMonitor"]
+```
+
+Historical runtime.properties
+```properties
+druid.service=historical
+
+# Our intermediate buffer is also very small so longer topNs will be slow.
+# In prod: set sizeBytes = 512mb
+druid.processing.buffer.sizeBytes=100000000
+# We can only 1 scan segment in parallel with these configs.
+# In prod: set numThreads = # cores - 1
+druid.processing.numThreads=1
+
+# maxSize should reflect the performance you want.
+# Druid memory maps segments.
+# memory_for_segments = total_memory - heap_size - (processing.buffer.sizeBytes * (processing.numThreads+1)) - JVM overhead (~1G)
+# The greater the memory/disk ratio, the better performance you should see
+druid.segmentCache.locations=[{"path": "/tmp/druid/indexCache", "maxSize"\: 10000000000}]
+druid.server.maxSize=10000000000
+```
+1. Start coordinator node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/coordinator:lib/* io.druid.cli.Main server coordinator
 
-b. Start historical node
+2. Start historical node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/historical:lib/* io.druid.cli.Main server historical
 
-c. Start broker node
+3. Start broker node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/broker:lib/* io.druid.cli.Main server broker
 
-d. Start realtime
+4. Start realtime
 > java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=twitter.spec -classpath config/_common:config/realtime:lib/* io.druid.cli.Main server realtime
