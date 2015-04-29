@@ -5,9 +5,6 @@
     "aggregations": [
         {"type": "longSum", "fieldName": "tweets", "name": "tweet_count"}
     ],
-    "filter": { 
-        "type": "selector", "dimension": "language", "value": "en"
-    }, 
     "intervals": ["2012-10-01T00:00/2020-01-01T00"]
 }
 
@@ -18,47 +15,44 @@
     "aggregations": [
         {"type": "doubleSum", "fieldName": "total_retweet_count", "name": "count"}
     ],
-    "filter": { 
-        "type": "selector", "dimension": "device", "value": "Android"
-    }, 
     "intervals": ["2012-10-01T00:00/2020-01-01T00"]
 }
 
 {
-	"queryType": "topN",
-	"dataSource": "twitter",
-	"dimension": "device",
-	"granularity": "all", 
-	"metric": "device_count",
-	"threshold" : 10,
-	"aggregations": [
-	    {"type": "longSum", "fieldName": "tweets", "name": "device_count"}
-	], 
-	"intervals": ["2012-10-01T00:00/2020-01-01T00"]
+    "queryType": "topN",
+    "dataSource": "twitter",
+    "dimension": "device",
+    "granularity": "all",
+    "metric": "device_count",
+    "threshold" : 5,
+    "aggregations": [
+    {"type": "longSum", "fieldName": "tweets", "name": "device_count"}
+    ],
+    "intervals": ["2012-10-01T00:00/2020-01-01T00"]
 }
 
 {
-	"queryType": "topN",
-	"dataSource": "twitter",
-	"dimension": "topic",
-	"granularity": "all", 
-	"metric": "topic_count",
-	"threshold" : 10,
-	"aggregations": [
-	    {"type": "longSum", "fieldName": "tweets", "name": "topic_count"}
-	],
-	"intervals": ["2012-10-01T00:00/2020-01-01T00"]
+    "queryType": "topN",
+    "dataSource": "twitter",
+    "dimension": "topic",
+    "granularity": "all",
+    "metric": "topic_count",
+    "threshold" : 5,
+    "aggregations": [
+        {"type": "longSum", "fieldName": "tweets", "name": "topic_count"}
+    ],
+    "intervals": ["2012-10-01T00:00/2020-01-01T00"]
 }
 
 {
-	"queryType": "topN",
-	"dataSource": "twitter",
-	"dimension": "language",
-	"granularity": "all", 
-	"metric": "language_count",
-	"threshold" : 10,
-	"aggregations": [
-	    {"type": "longSum", "fieldName": "tweets", "name": "language_count"}
-	], 
-	"intervals": ["2012-10-01T00:00/2020-01-01T00"]
+    "queryType": "topN",
+    "dataSource": "twitter",
+    "dimension": "language",
+    "granularity": "all",
+    "metric": "language_count",
+    "threshold" : 5,
+    "aggregations": [
+        {"type": "longSum", "fieldName": "tweets", "name": "language_count"}
+    ],
+    "intervals": ["2012-10-01T00:00/2020-01-01T00"]
 }

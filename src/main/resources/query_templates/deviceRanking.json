@@ -1,0 +1,16 @@
+{
+  "queryType": "topN",
+  "dataSource": "twitter",
+  "dimension": "device",
+  "granularity": "all",
+  "metric": "device_count",
+  "threshold": 5,
+  "aggregations": [
+    {
+      "type": "longSum",
+      "fieldName": "tweets",
+      "name": "device_count"
+    }
+  ],
+  "intervals": ["%s"]
+}

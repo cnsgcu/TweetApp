@@ -1,0 +1,16 @@
+{
+  "queryType": "topN",
+  "dataSource": "twitter",
+  "dimension": "language",
+  "granularity": "all",
+  "metric": "language_count",
+  "threshold": 5,
+  "aggregations": [
+    {
+      "type": "longSum",
+      "fieldName": "tweets",
+      "name": "language_count"
+    }
+  ],
+  "intervals": ["%s"]
+}

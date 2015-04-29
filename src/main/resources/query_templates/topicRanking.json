@@ -1,0 +1,16 @@
+{
+  "queryType": "topN",
+  "dataSource": "twitter",
+  "dimension": "topic",
+  "granularity": "all",
+  "metric": "topic_count",
+  "threshold": 5,
+  "aggregations": [
+    {
+      "type": "longSum",
+      "fieldName": "tweets",
+      "name": "topic_count"
+    }
+  ],
+  "intervals": ["%s"]
+}

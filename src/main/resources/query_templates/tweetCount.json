@@ -1,0 +1,13 @@
+{
+  "queryType": "timeseries",
+  "dataSource": "twitter",
+  "granularity": "all",
+  "aggregations": [
+    {
+      "type": "longSum",
+      "fieldName": "tweets",
+      "name": "tweet_count"
+    }
+  ],
+  "intervals": ["%s"]
+}

@@ -1,0 +1,13 @@
+{
+  "queryType": "groupBy",
+  "dataSource": "twitter",
+  "granularity": "all",
+  "aggregations": [
+    {
+      "type": "doubleSum",
+      "fieldName": "total_retweet_count",
+      "name": "count"
+    }
+  ],
+  "intervals": ["%s"]
+}
