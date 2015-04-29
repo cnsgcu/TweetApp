@@ -40,7 +40,7 @@ b. Create a topic
 #### IV. Druid
 
 common.runtime.properties
-```Java properties
+```properties
 # Extensions (no deep storage model is listed - using local fs for deep storage - not recommended for production)
 druid.extensions.coordinates=["io.druid.extensions:druid-examples","io.druid.extensions:druid-kafka-eight","io.druid.extensions:mysql-metadata-storage", "io.druid.extensions:druid-cassandra-storage:0.7.1.1"]
 
