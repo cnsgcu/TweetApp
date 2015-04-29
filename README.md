@@ -6,6 +6,7 @@ A real time tweet analysis application
 - Zookeeper
 - MySQL
 - Apache Kafka
+- Cassandra
 - Druid
 
 # Setup local Druid cluster
@@ -39,7 +40,10 @@ To start Zookeeper execute the following command
 
 #### IV. Druid
 
-common.runtime.properties
+Use the following configuration to setup Cassandra as deep storage.
+
+**Common - common.runtime.properties**
+
 ```properties
 # Extensions (no deep storage model is listed - using local fs for deep storage - not recommended for production)
 druid.extensions.coordinates=["io.druid.extensions:druid-examples","io.druid.extensions:druid-kafka-eight","io.druid.extensions:mysql-metadata-storage", "io.druid.extensions:druid-cassandra-storage:0.7.1.1"]
@@ -72,7 +76,7 @@ druid.selectors.indexing.serviceName=overlord
 druid.emitter=noop
 ```
 
-Realtime runtime.properties
+**Realtime - runtime.properties**
 ```properties
 druid.service=realtime
 
@@ -86,7 +90,7 @@ druid.processing.numThreads=1
 # druid.monitoring.monitors=["com.metamx.metrics.SysMonitor","com.metamx.metrics.JvmMonitor","io.druid.segment.realtime.RealtimeMetricsMonitor"]
 ```
 
-Historical runtime.properties
+**Historical - runtime.properties**
 ```properties
 druid.service=historical
 
@@ -104,6 +108,7 @@ druid.processing.numThreads=1
 druid.segmentCache.locations=[{"path": "/tmp/druid/indexCache", "maxSize"\: 10000000000}]
 druid.server.maxSize=10000000000
 ```
+
 1. Start coordinator node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/coordinator:lib/* io.druid.cli.Main server coordinator
 
