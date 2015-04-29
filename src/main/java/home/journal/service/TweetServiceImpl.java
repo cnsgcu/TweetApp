@@ -61,9 +61,40 @@ public class TweetServiceImpl implements TweetService
         return -1;
     }
 
+    @Override
+    public long getRetweetCount(LocalDateTime start, LocalDateTime end)
+    {
+        return 0;
+    }
+
+    @Override
+    public long getTweetCountInState(LocalDateTime start, LocalDateTime end, String state)
+    {
+        return 0;
+    }
+
+    @Override
+    public void getTopNTopics(LocalDateTime start, LocalDateTime end)
+    {
+
+    }
+
+    @Override
+    public void getTopNDevices(LocalDateTime start, LocalDateTime end)
+    {
+
+    }
+
+    @Override
+    public void getTopNLanguages(LocalDateTime start, LocalDateTime end)
+    {
+
+    }
+
     private static String loadResource(String path)
     {
-        LOGGER.info("");
+        LOGGER.info("Load " + path);
+
         return new Scanner(
             Thread.currentThread().getContextClassLoader()
                   .getResourceAsStream(path)
