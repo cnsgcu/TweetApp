@@ -31,4 +31,10 @@ To start Zookeeper execute the following command
 
 ##### III. Apache Kafka
 1. Start Kafka server
-	> bin/kafka-server-start.sh config/server.properties
+> bin/kafka-server-start.sh config/server.properties
+
+2. Create a topic
+> bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
+
+3. Start Kafka producer
+> bin/kafka-console-producer.sh --broker-list localhost:9092 --topic tweet
