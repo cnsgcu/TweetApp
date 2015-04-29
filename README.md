@@ -6,10 +6,10 @@ A real time tweet analysis application
 - Zookeeper
 - MySQL
 - Apache Kafka
-- Cassandra
+- Apache Cassandra
 - Druid
 
-# Setup local Druid cluster
+# Setup Druid's local cluster
 
 Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [MySQL](http://dev.mysql.com/downloads/mysql/) community server, and [Druid](http://druid.io/downloads.html).
 
@@ -20,7 +20,7 @@ To start Zookeeper execute the following command
 
 > bin/zookeeper-server-start.sh config/zookeeper.properties 
 
-#### II. MySQL server
+#### II. MySQL
 
 1. Install MySQL community server edition
 
@@ -37,6 +37,21 @@ To start Zookeeper execute the following command
 
 2. Create a topic
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
+
+#### IV Apache Cassandra
+
+Segments and their metadata are stored in Cassandra in two tables: index_storage and descriptor_storage. Execute below statements to create the tables.
+```SQL
+CREATE TABLE index_storage(key text,
+                           chunk text,
+                           value blob,
+                           PRIMARY KEY (key, chunk)) WITH COMPACT STORAGE;
+
+CREATE TABLE descriptor_storage(key varchar,
+                                lastModified timestamp,
+                                descriptor varchar,
+                                PRIMARY KEY (key)) WITH COMPACT STORAGE;
+```
 
 #### IV. Druid
 
