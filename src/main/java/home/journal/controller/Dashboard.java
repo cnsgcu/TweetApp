@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.time.LocalDateTime;
+
 @Controller
 public class Dashboard
 {
@@ -18,6 +20,7 @@ public class Dashboard
     @RequestMapping("/")
     public String get()
     {
+        tweetService.getTweetCount(LocalDateTime.now(), LocalDateTime.now());
         LOGGER.info("Get dashboard page!");
 
         return "dashboard/page";

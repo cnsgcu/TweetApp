@@ -36,10 +36,10 @@ To start Zookeeper execute the following command.
 1. Start Kafka server
 > bin/kafka-server-start.sh config/server.properties
 
-2. Create a topic
+2. Create tweet topic
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
 
-#### IV Apache Cassandra
+#### IV. Apache Cassandra
 
 Segments and their metadata are stored in Cassandra in two tables: index_storage and descriptor_storage. Execute below statements to create the tables.
 ```SQL
@@ -134,5 +134,5 @@ druid.server.maxSize=10000000000
 3. Start broker node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/broker:lib/* io.druid.cli.Main server broker
 
-4. Start realtime
+4. Start realtime node
 > java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=twitter.spec -classpath config/_common:config/realtime:lib/* io.druid.cli.Main server realtime
