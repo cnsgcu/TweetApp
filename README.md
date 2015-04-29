@@ -12,14 +12,14 @@ A real time tweet analysis application
 
 Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [MySQL](http://dev.mysql.com/downloads/mysql/) community server, and [Druid](http://druid.io/downloads.html).
 
-#### I. Start Apache Zookeeper
+#### I. Apache Zookeeper
 
 We are going to use Zookeeper that comes with Apache Kafka. Zookeeper server startup script is located under *\<KAFKA_DIR\>/bin* folder.
 To start Zookeeper execute the following command
 
 > bin/zookeeper-server-start.sh config/zookeeper.properties 
 
-#### II. Configure MySQL
+#### II. MySQL server
 
 1. Install MySQL community server edition
 
