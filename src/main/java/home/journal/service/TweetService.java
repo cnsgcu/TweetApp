@@ -1,7 +1,8 @@
 package home.journal.service;
 
-/**
- * Created by cuong on 4/28/15.
- */
-public class TweetService {
+import java.time.LocalDateTime;
+
+public interface TweetService
+{
+    public long getTweetCount(LocalDateTime start, LocalDateTime end);
 }

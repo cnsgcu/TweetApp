@@ -1,7 +1,13 @@
 package home.journal.service;
 
-/**
- * Created by cuong on 4/28/15.
- */
-public class TweetServiceImpl {
+import java.time.LocalDateTime;
+
+public class TweetServiceImpl implements TweetService
+{
+
+    @Override
+    public long getTweetCount(LocalDateTime start, LocalDateTime end)
+    {
+        return 0;
+    }
 }

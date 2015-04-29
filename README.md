@@ -11,7 +11,7 @@ A real time tweet analysis application
 
 # Setup Druid's local cluster
 
-Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [MySQL](http://dev.mysql.com/downloads/mysql/) community server, [Apache Cassandra](http://www.apache.org/dyn/closer.cgi?path=/cassandra/1.2.19/apache-cassandra-1.2.19-bin.tar.gz), and [Druid](http://druid.io/downloads.html).
+Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [MySQL](http://dev.mysql.com/downloads/mysql/) community server, [Apache Cassandra 1.2](http://www.apache.org/dyn/closer.cgi?path=/cassandra/1.2.19/apache-cassandra-1.2.19-bin.tar.gz), and [Druid](http://druid.io/downloads.html).
 
 #### I. Apache Zookeeper
 
