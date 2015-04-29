@@ -1,6 +1,6 @@
 # TweetApp
 
-A real time tweet analysis application
+A real time tweet analysis application.
 
 # Dependencies
 - Zookeeper
@@ -16,13 +16,13 @@ Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [My
 #### I. Apache Zookeeper
 
 We are going to use Zookeeper that comes with Apache Kafka. Zookeeper server startup script is located under *\<KAFKA_DIR\>/bin* folder.
-To start Zookeeper execute the following command
+To start Zookeeper execute the following command.
 
 > bin/zookeeper-server-start.sh config/zookeeper.properties 
 
 #### II. MySQL
 
-1. Install MySQL community server edition
+1. Install MySQL community server edition.
 
 2. Execute the following statements to create *druid* user and *druid* database
 	```SQL
@@ -57,7 +57,7 @@ CREATE TABLE descriptor_storage(key varchar,
 
 Use the following configuration to setup Cassandra as deep storage.
 
-**Common - common.runtime.properties**
+**Common configuration - common.runtime.properties**
 
 ```properties
 # Extensions (no deep storage model is listed - using local fs for deep storage - not recommended for production)
@@ -91,7 +91,7 @@ druid.selectors.indexing.serviceName=overlord
 druid.emitter=noop
 ```
 
-**Realtime - runtime.properties**
+**Realtime node config - runtime.properties**
 ```properties
 druid.service=realtime
 
@@ -105,7 +105,7 @@ druid.processing.numThreads=1
 # druid.monitoring.monitors=["com.metamx.metrics.SysMonitor","com.metamx.metrics.JvmMonitor","io.druid.segment.realtime.RealtimeMetricsMonitor"]
 ```
 
-**Historical - runtime.properties**
+**Historical node configuration - runtime.properties**
 ```properties
 druid.service=historical
 
