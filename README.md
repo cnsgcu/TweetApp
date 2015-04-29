@@ -12,14 +12,14 @@ A real time tweet analysis application
 
 Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [MySQL](http://dev.mysql.com/downloads/mysql/) community server, and [Druid](http://druid.io/downloads.html).
 
-##### I. Start Apache Zookeeper
+#### I. Start Apache Zookeeper
 
 We are going to use Zookeeper that comes with Apache Kafka. Zookeeper server startup script is located under *\<KAFKA_DIR\>/bin* folder.
 To start Zookeeper execute the following command
 
 > bin/zookeeper-server-start.sh config/zookeeper.properties 
 
-##### II. Configure MySQL
+#### II. Configure MySQL
 
 a. Install MySQL community server edition
 
@@ -29,7 +29,7 @@ b. Execute the following statements to create *druid* user and *druid* database
 	CREATE DATABASE druid DEFAULT CHARACTER SET utf8;
 	```
 
-##### III. Apache Kafka
+#### III. Apache Kafka
 
 a. Start Kafka server
 > bin/kafka-server-start.sh config/server.properties
@@ -37,10 +37,10 @@ a. Start Kafka server
 b. Create a topic
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
 
-##### IV. Druid
+#### IV. Druid
 
 common.runtime.properties
-```Java
+```Java properties
 # Extensions (no deep storage model is listed - using local fs for deep storage - not recommended for production)
 druid.extensions.coordinates=["io.druid.extensions:druid-examples","io.druid.extensions:druid-kafka-eight","io.druid.extensions:mysql-metadata-storage", "io.druid.extensions:druid-cassandra-storage:0.7.1.1"]
 
@@ -52,14 +52,6 @@ druid.metadata.storage.type=mysql
 druid.metadata.storage.connector.connectURI=jdbc\:mysql\://localhost\:3306/druid
 druid.metadata.storage.connector.user=druid
 druid.metadata.storage.connector.password=diurd
-
-# Deep storage (local filesystem for examples - don't use this in production)
-#druid.storage.type=local
-#druid.storage.storageDirectory=/tmp/druid/localStorage
-
-# Deep storage configuration for HDFS
-#druid.storage.type=hdfs
-#druid.storage.storageDirectory=hdfs://localhost:9000/user/cuong
 
 # Deep storage configuration for Cassandra
 druid.storage.type=c*
