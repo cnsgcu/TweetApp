@@ -54,7 +54,7 @@ CREATE TABLE descriptor_storage(key varchar,
                                 PRIMARY KEY (key)) WITH COMPACT STORAGE;
 ```
 
-#### IV. Druid
+#### V. Druid
 
 Use the following configuration to setup Cassandra as deep storage.
 

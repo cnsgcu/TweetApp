@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -16,7 +17,7 @@ public class ApplicationConfig
     @Bean
     public ScheduledExecutorService scheduledExecutorService()
     {
-        LOGGER.info("Create thread pool of 4 threads.");
+        LOGGER.info("Create thread pool of 4 threads. " + LocalDateTime.now());
 
         return Executors.newScheduledThreadPool(4);
     }
