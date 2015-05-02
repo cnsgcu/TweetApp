@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletResponse;
 import java.time.LocalDateTime;
 
 @Controller
@@ -24,5 +25,11 @@ public class Dashboard
         LOGGER.info("Get dashboard page!");
 
         return "dashboard/page";
+    }
+
+    @RequestMapping("/")
+    public void frequency(HttpServletResponse response)
+    {
+
     }
 }

@@ -2,18 +2,18 @@ package home.journal.model;
 
 import java.util.Date;
 
-public class TweetCountResponse
+public class CountResponse
 {
     private Date timestamp;
-    private TweetCountResult result;
+    private CountResult result;
 
 
-    public TweetCountResult getResult()
+    public CountResult getResult()
     {
         return result;
     }
 
-    public void setResult(TweetCountResult result)
+    public void setResult(CountResult result)
     {
         this.result = result;
     }

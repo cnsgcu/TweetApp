@@ -3,7 +3,7 @@ package home.journal.service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-import home.journal.model.TweetCountResponse;
+import home.journal.model.CountResponse;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -24,13 +24,13 @@ import java.util.Scanner;
 @Component
 public class TweetServiceImpl implements TweetService
 {
-    final static private Logger LOGGER = LoggerFactory.getLogger(TweetServiceImpl.class);
+    static final private Logger LOGGER = LoggerFactory.getLogger(TweetServiceImpl.class);
 
-    static final public String tweetCountQueryTemplate = loadResource("query_templates/tweetCount.json");
-    static final public String retweetCountQueryTemplate = loadResource("query_templates/retweetCount.json");
-    static final public String deviceRankingQueryTemplate = loadResource("query_templates/deviceRanking.json");
-    static final public String topicRankingQueryTemplate = loadResource("query_templates/topicRanking.json");
-    static final public String languageRankingQueryTemplate = loadResource("query_templates/languageRanking.json");
+    static final public String TWEET_COUNT_QUERY_TEMPLATE   = loadResource("query_templates/tweetCount.json");
+    static final public String RETWEET_COUNT_QUERY_TEMPLATE = loadResource("query_templates/retweetCount.json");
+    static final public String DEVICE_RANK_QUERY_TEMPLATE   = loadResource("query_templates/deviceRanking.json");
+    static final public String TOPIC_RANK_QUERY_TEMPLATE    = loadResource("query_templates/topicRanking.json");
+    static final public String LANGUAGE_RANK_QUERY_TEMPLATE = loadResource("query_templates/languageRanking.json");
 
     static final private String URL = "http://localhost:8082/druid/v2/";
     static final private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
@@ -42,7 +42,7 @@ public class TweetServiceImpl implements TweetService
     {
         try {
             final HttpPost request = new HttpPost(URL);
-            final StringEntity entity = new StringEntity(String.format(tweetCountQueryTemplate, "2012-10-01T00:00/2020-01-01T00"));
+            final StringEntity entity = new StringEntity(String.format(TWEET_COUNT_QUERY_TEMPLATE, "2012-10-01T00:00/2020-01-01T00"));
             request.addHeader("Content-Type", "application/json");
             request.setEntity(entity);
 
@@ -50,10 +50,10 @@ public class TweetServiceImpl implements TweetService
             final String resStr = EntityUtils.toString(response.getEntity());
             LOGGER.info(resStr);
 
-            final Type listType = new TypeToken<ArrayList<TweetCountResponse>>() {}.getType();
-            final List<TweetCountResponse> tweetCountResponseList = (ArrayList<TweetCountResponse>) gson.fromJson(resStr, listType);
+            final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
+            final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
-            return tweetCountResponseList.get(0).getResult().getTweet_count();
+            return countResponseList.get(0).getResult().getTweet_count();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -64,13 +64,50 @@ public class TweetServiceImpl implements TweetService
     @Override
     public long getRetweetCount(LocalDateTime start, LocalDateTime end)
     {
-        return 0;
-    }
+        try {
+            final HttpPost request = new HttpPost(URL);
+            final StringEntity entity = new StringEntity(String.format(RETWEET_COUNT_QUERY_TEMPLATE, "2012-10-01T00:00/2020-01-01T00"));
+            request.addHeader("Content-Type", "application/json");
+            request.setEntity(entity);
+
+            final HttpResponse response = httpClient.execute(request);
+            final String resStr = EntityUtils.toString(response.getEntity());
+            LOGGER.info(resStr);
+
+            final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
+            final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
+
+            return countResponseList.get(0).getResult().getTweet_count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return -1;    }
 
     @Override
     public long getTweetCountInState(LocalDateTime start, LocalDateTime end, String state)
     {
-        return 0;
+        try {
+            final HttpPost request = new HttpPost(URL);
+
+            // TODO use state name
+            final StringEntity entity = new StringEntity(String.format(TWEET_COUNT_QUERY_TEMPLATE, "2012-10-01T00:00/2020-01-01T00"));
+            request.addHeader("Content-Type", "application/json");
+            request.setEntity(entity);
+
+            final HttpResponse response = httpClient.execute(request);
+            final String resStr = EntityUtils.toString(response.getEntity());
+            LOGGER.info(resStr);
+
+            final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
+            final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
+
+            return countResponseList.get(0).getResult().getTweet_count();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
     }
 
     @Override

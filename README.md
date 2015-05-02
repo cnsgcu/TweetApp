@@ -3,7 +3,9 @@
 A real time tweet analysis application.
 
 ![Alt text](https://raw.githubusercontent.com/cnsgcu/TweetApp/master/screenshot/screenshot.png "Screenshot")
+
 # Dependencies
+
 - Zookeeper
 - MySQL
 - Apache Kafka

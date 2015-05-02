@@ -1,6 +1,6 @@
 package home.journal.model;
 
-public class TweetCountResult
+public class CountResult
 {
     private long tweet_count;
 

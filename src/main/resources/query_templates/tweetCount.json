@@ -6,7 +6,7 @@
     {
       "type": "longSum",
       "fieldName": "tweets",
-      "name": "tweet_count"
+      "name": "count"
     }
   ],
   "intervals": ["%s"]
