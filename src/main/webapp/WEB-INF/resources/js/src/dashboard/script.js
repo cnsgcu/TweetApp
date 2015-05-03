@@ -30,8 +30,41 @@ FrequencyMeter.prototype.reCount = function () {
     this.meter.text(this.data[this.data.length - 1]);
 };
 
+function CountMeter(chart, url) {
+    var self = this instanceof CountMeter
+        ? this
+        : Object.create(CountMeter.prototype);
+
+    self.data = [];
+    self.chart = chart;
+
+    self.threshold = 50;
+    self.sse = new EventSource(url);
+
+    self.sse.addEventListener("message", function (msg) {
+        self.data.push(msg.data);
+
+        if (self.data.length > self.threshold) {
+            self.data.splice(0, self.data.length - self.threshold);
+        }
+
+        self.reChart();
+    });
+}
+
+CountMeter.prototype.reChart = function () {
+    this.chart.sparkline(this.data, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
+};
+
+// =====================================================================================================================
+
 var tweetFrq = new FrequencyMeter($("#tweet-frq"), $("#tweet-frq-chart"), "/statistic/tweet");
 var retweetFrq = new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), "/statistic/retweet");
+
+// To have more than 6 connections to server change FireFox max persistent connections in about:config
+$('#left-analysis').find('span').map(function(idx, dom) {
+    return new CountMeter($(dom), "/statistic/tweet/" + $(dom).attr('id'));
+});
 
 var bubbles = [
     //{lat: 39.099727, lng: -92.578567},
@@ -85,17 +118,6 @@ map.bigCircle( bubbles );
 
 d3.selectAll('path').style('fill', '#000');
 d3.selectAll('path').style('stroke', '#222');
-
-var dummyLine = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5];
-$("#left-analysis").find(".line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
-
-setInterval(function() {
-	var rand = Math.floor(Math.random() * 9) + 1;
-	
-	dummyLine.push(rand);
-	dummyLine.splice(0, 1);
-	$("#left-analysis").find(".line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
-}, 1000);
 
 var dumPie = [60, 30, 10];
 $(".device-pie").sparkline(dumPie, {type: "pie", width: "50px", height: "50px", offset: "-90"});

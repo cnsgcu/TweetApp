@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Random;
 
 @Controller
 public class Dashboard
@@ -37,14 +38,14 @@ public class Dashboard
         try {
             final PrintWriter writer = response.getWriter();
 
-            int frq = 0;
+            final Random random = new Random();
 
+            // TODO collect data from Druid
             while (true) {
-                writer.write("data: " + frq + "\n\n");
+                writer.write("data: " + (random.nextInt(100 - 1) + 1) + "\n\n");
                 writer.flush();
 
                 Thread.sleep(1000);
-                frq += 1;
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -59,14 +60,38 @@ public class Dashboard
         try {
             final PrintWriter writer = response.getWriter();
 
-            int frq = 0;
+            final Random random = new Random();
 
+            // TODO collect data from Druid
             while (true) {
-                writer.write("data: " + frq + "\n\n");
+                writer.write("data: " + (random.nextInt(100 - 1) + 1) + "\n\n");
                 writer.flush();
 
                 Thread.sleep(1000);
-                frq += 1;
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @RequestMapping("/statistic/tweet/{state}")
+    public void state(@PathVariable String state, HttpServletResponse response)
+    {
+        response.setContentType("text/event-stream");
+
+        LOGGER.info("Tweet count of " + state.replace("_", " "));
+
+        try {
+            final PrintWriter writer = response.getWriter();
+
+            // TODO collect data from Druid
+            final Random random = new Random();
+
+            while (true) {
+                writer.write("data: " + (random.nextInt(100 - 1) + 1) + "\n\n");
+                writer.flush();
+
+                Thread.sleep(1000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -77,26 +102,16 @@ public class Dashboard
     public void device(HttpServletResponse response)
     {
         response.setContentType("text/event-stream");
-
     }
 
     @RequestMapping("/statistic/language")
     public void language(HttpServletResponse response)
     {
-
     }
 
     @RequestMapping("/statistic/topic")
     public void topic(HttpServletResponse response)
     {
         response.setContentType("text/event-stream");
-
-    }
-
-    @RequestMapping("/statistic/tweet/{state}")
-    public void state(@PathVariable String state, HttpServletResponse response)
-    {
-        response.setContentType("text/event-stream");
-
     }
 }
