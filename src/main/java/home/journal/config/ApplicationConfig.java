@@ -17,8 +17,8 @@ public class ApplicationConfig
     @Bean
     public ScheduledExecutorService scheduledExecutorService()
     {
-        LOGGER.info("Create thread pool of 4 threads. " + LocalDateTime.now());
+        LOGGER.info("Create thread pool of 5 threads. " + LocalDateTime.now());
 
-        return Executors.newScheduledThreadPool(4);
+        return Executors.newScheduledThreadPool(5);
     }
 }

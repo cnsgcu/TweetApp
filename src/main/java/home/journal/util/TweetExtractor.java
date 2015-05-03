@@ -12,6 +12,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class TweetExtractor
@@ -23,6 +25,8 @@ public class TweetExtractor
     final private List<Consumer<Tweet>> extractings;
 
     final private Map<String, String> stateCodes;
+
+    final private Pattern hashTagMatcher = Pattern.compile("#(.+?)\\b");
 
     private TweetExtractor(Status source)
     {
@@ -89,7 +93,7 @@ public class TweetExtractor
 
     public TweetExtractor extractLanguage()
     {
-        final Consumer<Tweet> languageExtracting = t -> t.setLanguage(source.getLang());
+        final Consumer<Tweet> languageExtracting = tweet -> tweet.setLanguage(source.getLang());
 
         extractings.add(languageExtracting);
 
@@ -98,7 +102,7 @@ public class TweetExtractor
 
     public TweetExtractor extractDate()
     {
-        final Consumer<Tweet> dateExtracting = t -> t.setTimestamp(source.getCreatedAt());
+        final Consumer<Tweet> dateExtracting = tweet -> tweet.setTimestamp(source.getCreatedAt());
 
         extractings.add(dateExtracting);
 
@@ -107,7 +111,7 @@ public class TweetExtractor
 
     public TweetExtractor extractRetweetCount()
     {
-        final Consumer<Tweet> retweetCountExtracting = t -> t.setRetweetCount(source.getRetweetCount());
+        final Consumer<Tweet> retweetCountExtracting = tweet -> tweet.setRetweetCount(source.getRetweetCount());
 
         extractings.add(retweetCountExtracting);
 
@@ -116,25 +120,25 @@ public class TweetExtractor
 
     public TweetExtractor extractState()
     {
-        final Consumer<Tweet> stateExtracting = t -> {
+        final Consumer<Tweet> stateExtracting = tweet -> {
             if (source.getPlace() == null) {
-                t.setState("");
+                tweet.setState("");
             } else {
                 switch (source.getPlace().getPlaceType()) {
                     case "city": {
                         final String state =stateCodes.get(source.getPlace().getFullName().split(",")[1].trim().toUpperCase());
 
-                        t.setState(state);
+                        tweet.setState(state);
                         break;
                     }
                     case "admin": {
                         final String state = source.getPlace().getFullName().split(",")[0].trim();
 
-                        t.setState(state);
+                        tweet.setState(state);
                         break;
                     }
                     default: {
-                        t.setState(source.getPlace().getFullName());
+                        tweet.setState(source.getPlace().getFullName());
 
                         break;
                     }
@@ -149,19 +153,31 @@ public class TweetExtractor
 
     public TweetExtractor extractTopic()
     {
+        final Consumer<Tweet> topicExtracting = tweet -> {
+            final Matcher matcher = hashTagMatcher.matcher(source.getText());
+
+            if (matcher.find()) {
+                tweet.setTopic(matcher.group(1));
+            } else {
+                extractings.clear();
+            }
+        };
+
+        extractings.add(0, topicExtracting);
+
         return this;
     }
 
     public TweetExtractor extractDevice()
     {
         final Document doc = Jsoup.parse(source.getSource());
-        final Consumer<Tweet> deviceExtracting = t -> {
+        final Consumer<Tweet> deviceExtracting = tweet -> {
             final String txt = doc.select("a").text();
 
             if (txt.contains("Web")) {
-                t.setDevice("Web Client");
+                tweet.setDevice("Web Client");
             } else {
-                t.setDevice(Stream.of(txt.split(" ")).reduce((p, c) -> c).get());
+                tweet.setDevice(Stream.of(txt.split(" ")).reduce((p, c) -> c).get());
             }
         };
 
@@ -172,10 +188,10 @@ public class TweetExtractor
 
     public TweetExtractor extractLatLon()
     {
-        final Consumer<Tweet> latLongExtracting = t -> {
+        final Consumer<Tweet> latLongExtracting = tweet -> {
             if (source.getGeoLocation() != null) {
-                t.setLat(source.getGeoLocation().getLatitude());
-                t.setLon(source.getGeoLocation().getLongitude());
+                tweet.setLat(source.getGeoLocation().getLatitude());
+                tweet.setLon(source.getGeoLocation().getLongitude());
             }
         };
 

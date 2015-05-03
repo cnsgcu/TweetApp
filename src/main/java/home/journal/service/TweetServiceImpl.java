@@ -38,7 +38,7 @@ public class TweetServiceImpl implements TweetService
     final public HttpClient httpClient = HttpClientBuilder.create().build();
 
     @Override
-    public long getTweetCount(LocalDateTime start, LocalDateTime end)
+    public long getTweetCount(LocalDateTime from, LocalDateTime to)
     {
         try {
             final HttpPost request = new HttpPost(URL);
@@ -48,6 +48,7 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
+
             LOGGER.info(resStr);
 
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
@@ -62,7 +63,7 @@ public class TweetServiceImpl implements TweetService
     }
 
     @Override
-    public long getRetweetCount(LocalDateTime start, LocalDateTime end)
+    public long getRetweetCount(LocalDateTime from, LocalDateTime to)
     {
         try {
             final HttpPost request = new HttpPost(URL);
@@ -72,6 +73,7 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
+
             LOGGER.info(resStr);
 
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
@@ -85,7 +87,7 @@ public class TweetServiceImpl implements TweetService
         return -1;    }
 
     @Override
-    public long getTweetCountInState(LocalDateTime start, LocalDateTime end, String state)
+    public long getTweetCountInState(LocalDateTime from, LocalDateTime to, String state)
     {
         try {
             final HttpPost request = new HttpPost(URL);
@@ -97,6 +99,7 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
+
             LOGGER.info(resStr);
 
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
@@ -111,7 +114,7 @@ public class TweetServiceImpl implements TweetService
     }
 
     @Override
-    public void getTopNTopics(LocalDateTime start, LocalDateTime end)
+    public void getTopNTopics(LocalDateTime from, LocalDateTime to)
     {
 
     }
@@ -123,7 +126,7 @@ public class TweetServiceImpl implements TweetService
     }
 
     @Override
-    public void getTopNLanguages(LocalDateTime start, LocalDateTime end)
+    public void getTopNLanguages(LocalDateTime from, LocalDateTime to)
     {
 
     }
@@ -133,8 +136,7 @@ public class TweetServiceImpl implements TweetService
         LOGGER.info("Load " + path);
 
         return new Scanner(
-            Thread.currentThread().getContextClassLoader()
-                  .getResourceAsStream(path)
+            Thread.currentThread().getContextClassLoader().getResourceAsStream(path)
         ).useDelimiter("\\A").next();
     }
 }

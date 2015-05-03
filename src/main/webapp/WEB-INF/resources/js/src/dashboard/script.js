@@ -1,10 +1,10 @@
-var bubbles = [  
-	{lat: 39.099727, lng: -92.578567},
-	{lat: 37.099727, lng: -92.578567},
-	{lat: 34.099727, lng: -92.578567},
-	{lat: 32.099727, lng: -92.578567},
-	{lat: 31.099727, lng: -92.578567},
-	{lat: 39.099727, lng: -94.578567}
+var bubbles = [
+    {lat: 39.099727, lng: -92.578567},
+    {lat: 37.099727, lng: -92.578567},
+    {lat: 34.099727, lng: -92.578567},
+    {lat: 32.099727, lng: -92.578567},
+    {lat: 31.099727, lng: -92.578567},
+    {lat: 39.099727, lng: -94.578567}
 ];
 
 var map = new Datamap({
@@ -31,9 +31,7 @@ var map = new Datamap({
 
 map.addPlugin('bigCircle', function ( layer, data ) {
     var self = this;
-
     var className = 'bigCircle';
-
     var bubbles = layer.selectAll(className).data( data, JSON.stringify );
 
     bubbles.enter()
@@ -54,24 +52,24 @@ d3.selectAll('path').style('fill', '#000');
 d3.selectAll('path').style('stroke', '#222');
 
 var dummyBar = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,1,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5,2,3,9,6,5,9,6,5,6,5,6,5,9];
-$("#right-analysis .bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+$("#right-analysis").find(".bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
 setInterval(function() {
 	var rand = Math.floor(Math.random() * 9) + 1;
 	
 	dummyBar.push(rand);
 	dummyBar.splice(0, 1);
-	$("#right-analysis .bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+	$("#right-analysis").find(".bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
 }, 1000);
 
 var dummyLine = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5];
-$("#left-analysis .line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
+$("#left-analysis").find(".line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
 
 setInterval(function() {
 	var rand = Math.floor(Math.random() * 9) + 1;
 	
 	dummyLine.push(rand);
 	dummyLine.splice(0, 1);
-	$("#left-analysis .line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
+	$("#left-analysis").find(".line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
 }, 1000);
 
 var dumPie = [60, 30, 10];

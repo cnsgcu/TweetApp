@@ -7,15 +7,15 @@ import java.time.LocalDateTime;
 @Service
 public interface TweetService
 {
-    long getTweetCount(LocalDateTime start, LocalDateTime end);
+    long getTweetCount(LocalDateTime from, LocalDateTime to);
 
-    long getRetweetCount(LocalDateTime start, LocalDateTime end);
+    long getRetweetCount(LocalDateTime from, LocalDateTime to);
 
-    long getTweetCountInState(LocalDateTime start, LocalDateTime end, String state);
+    long getTweetCountInState(LocalDateTime from, LocalDateTime to, String state);
 
-    void getTopNTopics(LocalDateTime start, LocalDateTime end);
+    void getTopNTopics(LocalDateTime from, LocalDateTime to);
 
-    void getTopNDevices(LocalDateTime start, LocalDateTime end);
+    void getTopNDevices(LocalDateTime from, LocalDateTime to);
 
-    void getTopNLanguages(LocalDateTime start, LocalDateTime end);
+    void getTopNLanguages(LocalDateTime from, LocalDateTime to);
 }

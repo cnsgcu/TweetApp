@@ -52,6 +52,7 @@ public class KafkaTweetStream
             if (status.getPlace() != null && status.getPlace().getCountryCode().equalsIgnoreCase("us")) {
                 final Tweet tweet = TweetExtractor.from(status)
                                                   .extractDate()
+                                                  .extractTopic()
                                                   .extractState()
                                                   .extractLatLon()
                                                   .extractDevice()
@@ -59,6 +60,7 @@ public class KafkaTweetStream
                                                   .extractRetweetCount()
                                                   .to(new Tweet());
                 LOGGER.info(gson.toJson(tweet));
+                //getKafkaProducer().send(new KeyedMessage<>("tweet", gson.toJson(tweet)));
             }
         }
 
