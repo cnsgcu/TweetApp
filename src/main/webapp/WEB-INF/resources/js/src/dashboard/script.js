@@ -1,10 +1,45 @@
+function FrequencyMeter(meter, chart, url) {
+    var self = this instanceof FrequencyMeter
+             ? this
+             : Object.create(FrequencyMeter.prototype);
+
+    self.data = [];
+    self.meter = meter;
+    self.chart = chart;
+
+    self.threshold = 63;
+    self.sse = new EventSource(url);
+
+    self.sse.addEventListener("message", function (msg) {
+        self.data.push(msg.data);
+
+        if (self.data.length > self.threshold) {
+            self.data.splice(0, self.data.length - self.threshold);
+        }
+
+        self.reChart();
+        self.reCount();
+    });
+}
+
+FrequencyMeter.prototype.reChart = function () {
+    this.chart.sparkline(this.data, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+};
+
+FrequencyMeter.prototype.reCount = function () {
+    this.meter.text(this.data[this.data.length - 1]);
+};
+
+var tweetFrq = new FrequencyMeter($("#tweet-frq"), $("#tweet-frq-chart"), "/statistic/tweet");
+var retweetFrq = new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), "/statistic/retweet");
+
 var bubbles = [
-    {lat: 39.099727, lng: -92.578567},
-    {lat: 37.099727, lng: -92.578567},
-    {lat: 34.099727, lng: -92.578567},
-    {lat: 32.099727, lng: -92.578567},
-    {lat: 31.099727, lng: -92.578567},
-    {lat: 39.099727, lng: -94.578567}
+    //{lat: 39.099727, lng: -92.578567},
+    //{lat: 37.099727, lng: -92.578567},
+    //{lat: 34.099727, lng: -92.578567},
+    //{lat: 32.099727, lng: -92.578567},
+    //{lat: 31.099727, lng: -92.578567},
+    //{lat: 39.099727, lng: -94.578567}
 ];
 
 var map = new Datamap({
@@ -50,16 +85,6 @@ map.bigCircle( bubbles );
 
 d3.selectAll('path').style('fill', '#000');
 d3.selectAll('path').style('stroke', '#222');
-
-var dummyBar = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,1,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5,2,3,9,6,5,9,6,5,6,5,6,5,9];
-$("#right-analysis").find(".bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
-setInterval(function() {
-	var rand = Math.floor(Math.random() * 9) + 1;
-	
-	dummyBar.push(rand);
-	dummyBar.splice(0, 1);
-	$("#right-analysis").find(".bar").sparkline(dummyBar, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
-}, 1000);
 
 var dummyLine = [5,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,9,6,5,9,5,2,3,9,6,5,9,7,3,5,2,3,3,5,2,3,9,6,5];
 $("#left-analysis").find(".line").sparkline(dummyLine, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
