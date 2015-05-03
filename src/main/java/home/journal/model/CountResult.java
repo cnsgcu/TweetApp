@@ -2,15 +2,15 @@ package home.journal.model;
 
 public class CountResult
 {
-    private long tweet_count;
+    private long count;
 
-    public long getTweet_count()
+    public long getCount()
     {
-        return tweet_count;
+        return count;
     }
 
-    public void setTweet_count(long tweet_count)
+    public void setCount(long count)
     {
-        this.tweet_count = tweet_count;
+        this.count = count;
     }
 }

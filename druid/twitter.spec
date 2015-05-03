@@ -18,7 +18,7 @@
               "language",
               "state",
               "device",
-              "retweet_count",
+              "retweetCount",
               "topic"
             ],
             "dimensionExclusions" : [],
@@ -40,7 +40,7 @@
       }, {
         "type" : "longSum",
         "name" : "total_retweet_count",
-        "fieldName" : "retweet_count"
+        "fieldName" : "retweetCount"
       }],
       "granularitySpec" : {
         "type" : "uniform",

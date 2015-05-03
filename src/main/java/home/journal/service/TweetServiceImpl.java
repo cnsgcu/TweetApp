@@ -53,7 +53,7 @@ public class TweetServiceImpl implements TweetService
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
-            return countResponseList.get(0).getResult().getTweet_count();
+            return countResponseList.get(0).getResult().getCount();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,7 +77,7 @@ public class TweetServiceImpl implements TweetService
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
-            return countResponseList.get(0).getResult().getTweet_count();
+            return countResponseList.get(0).getResult().getCount();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -102,7 +102,7 @@ public class TweetServiceImpl implements TweetService
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
-            return countResponseList.get(0).getResult().getTweet_count();
+            return countResponseList.get(0).getResult().getCount();
         } catch (IOException e) {
             e.printStackTrace();
         }
