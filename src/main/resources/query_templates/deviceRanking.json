@@ -4,7 +4,7 @@
   "dimension": "device",
   "granularity": "all",
   "metric": "count",
-  "threshold": 5,
+  "threshold": 3,
   "aggregations": [
     {
       "type": "longSum",

@@ -6,6 +6,7 @@ public class CountResponse
 {
     private String version;
     private Date timestamp;
+    private CountResult event;
     private CountResult result;
 
 
@@ -27,6 +28,16 @@ public class CountResponse
     public void setResult(CountResult result)
     {
         this.result = result;
+    }
+
+    public CountResult getEvent()
+    {
+        return event;
+    }
+
+    public void setEvent(CountResult event)
+    {
+        this.event = event;
     }
 
     public Date getTimestamp()

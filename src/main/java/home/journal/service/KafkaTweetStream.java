@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import home.journal.model.Tweet;
 import home.journal.util.TweetExtractor;
 import kafka.javaapi.producer.Producer;
+import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +18,12 @@ public class KafkaTweetStream
 {
     static final private Logger LOGGER = LoggerFactory.getLogger(KafkaTweetStream.class);
 
-//    public static void main(String... args)
-//    {
-//        KafkaTweetStream tweetStream = new KafkaTweetStream();
-//
-//        tweetStream.stream();
-//    }
+    public static void main(String... args)
+    {
+        final KafkaTweetStream tweetStream = new KafkaTweetStream();
+
+        tweetStream.stream();
+    }
 
     private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").setPrettyPrinting().create();
 
@@ -52,15 +53,17 @@ public class KafkaTweetStream
             if (status.getPlace() != null && status.getPlace().getCountryCode().equalsIgnoreCase("us")) {
                 final Tweet tweet = TweetExtractor.from(status)
                                                   .extractDate()
-                                                  .extractTopic()
                                                   .extractState()
                                                   .extractLatLon()
                                                   .extractDevice()
                                                   .extractLanguage()
                                                   .extractRetweetCount()
                                                   .to(new Tweet());
-                LOGGER.info(gson.toJson(tweet));
-                //getKafkaProducer().send(new KeyedMessage<>("tweet", gson.toJson(tweet)));
+                final String tweetStr = gson.toJson(tweet);
+
+                LOGGER.info(tweetStr);
+
+                getKafkaProducer().send(new KeyedMessage<>("tweet", tweetStr));
             }
         }
 

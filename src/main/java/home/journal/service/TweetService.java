@@ -1,8 +1,12 @@
 package home.journal.service;
 
+import home.journal.model.DeviceCount;
+import home.journal.model.LanguageCount;
+import home.journal.model.TopicCount;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public interface TweetService
@@ -11,11 +15,11 @@ public interface TweetService
 
     long getRetweetCount(LocalDateTime from, LocalDateTime to);
 
-    long getTweetCountInState(LocalDateTime from, LocalDateTime to, String state);
+    long getTweetCountByState(LocalDateTime from, LocalDateTime to, String state);
 
-    void getTopNTopics(LocalDateTime from, LocalDateTime to);
+    List<TopicCount> getTopNTopics(LocalDateTime from, LocalDateTime to);
 
-    void getTopNDevices(LocalDateTime from, LocalDateTime to);
+    List<DeviceCount> getTopNDevices(LocalDateTime from, LocalDateTime to);
 
-    void getTopNLanguages(LocalDateTime from, LocalDateTime to);
+    List<LanguageCount> getTopNLanguages(LocalDateTime from, LocalDateTime to);
 }
