@@ -3,13 +3,13 @@
   "dataSource": "twitter",
   "dimension": "device",
   "granularity": "all",
-  "metric": "device_count",
+  "metric": "count",
   "threshold": 5,
   "aggregations": [
     {
       "type": "longSum",
       "fieldName": "tweets",
-      "name": "device_count"
+      "name": "count"
     }
   ],
   "intervals": ["%s"]

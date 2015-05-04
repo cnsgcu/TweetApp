@@ -4,7 +4,7 @@
   "granularity": "all",
   "aggregations": [
     {
-      "type": "doubleSum",
+      "type": "longSum",
       "fieldName": "total_retweet_count",
       "name": "count"
     }

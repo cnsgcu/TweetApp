@@ -3,13 +3,13 @@
   "dataSource": "twitter",
   "dimension": "language",
   "granularity": "all",
-  "metric": "language_count",
+  "metric": "count",
   "threshold": 5,
   "aggregations": [
     {
       "type": "longSum",
       "fieldName": "tweets",
-      "name": "language_count"
+      "name": "count"
     }
   ],
   "intervals": ["%s"]

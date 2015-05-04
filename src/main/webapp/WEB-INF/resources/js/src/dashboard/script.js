@@ -32,8 +32,8 @@ FrequencyMeter.prototype.reCount = function () {
 
 function CountMeter(chart, url) {
     var self = this instanceof CountMeter
-        ? this
-        : Object.create(CountMeter.prototype);
+             ? this
+             : Object.create(CountMeter.prototype);
 
     self.data = [];
     self.chart = chart;
@@ -55,6 +55,8 @@ function CountMeter(chart, url) {
 CountMeter.prototype.reChart = function () {
     this.chart.sparkline(this.data, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
 };
+
+// TODO top language, device, and topic
 
 // =====================================================================================================================
 

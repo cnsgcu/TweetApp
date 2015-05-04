@@ -84,7 +84,8 @@ public class TweetServiceImpl implements TweetService
             e.printStackTrace();
         }
 
-        return -1;    }
+        return -1;
+    }
 
     @Override
     public long getTweetCountInState(LocalDateTime from, LocalDateTime to, String state)
