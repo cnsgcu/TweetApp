@@ -3,11 +3,12 @@ function FrequencyMeter(meter, chart, url) {
              ? this
              : Object.create(FrequencyMeter.prototype);
 
-    self.data = [];
+    self.threshold = 63;
+
+    self.data = (new Array(self.threshold)).fill(0);
     self.meter = meter;
     self.chart = chart;
 
-    self.threshold = 63;
     self.sse = new EventSource(url);
 
     self.sse.addEventListener("message", function (msg) {
@@ -35,10 +36,11 @@ function CountMeter(chart, url) {
              ? this
              : Object.create(CountMeter.prototype);
 
-    self.data = [];
+    self.threshold = 50;
+
+    self.data = (new Array(self.threshold)).fill(0);
     self.chart = chart;
 
-    self.threshold = 50;
     self.sse = new EventSource(url);
 
     self.sse.addEventListener("message", function (msg) {
@@ -56,7 +58,18 @@ CountMeter.prototype.reChart = function () {
     this.chart.sparkline(this.data, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
 };
 
-// TODO top language, device, and topic
+function TopMeter(url)
+{
+    var self = this instanceof TopMeter
+             ? this
+             : Object.create(TopMeter.prototype);
+
+    self.sse = new EventSource(url);
+
+    self.sse.addEventListener("message", function (msg) {
+        console.log(msg.data);
+    });
+}
 
 // =====================================================================================================================
 
@@ -67,6 +80,10 @@ var retweetFrq = new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), 
 $('#left-analysis').find('span').map(function(idx, dom) {
     return new CountMeter($(dom), "/statistic/tweet/" + $(dom).attr('id'));
 });
+
+var top3Devices = new TopMeter("/statistic/device");
+var top5Languages = new TopMeter("/statistic/language");
+var top5Topics = new TopMeter("/statistic/topic");
 
 var bubbles = [
     //{lat: 39.099727, lng: -92.578567},
@@ -121,5 +138,5 @@ map.bigCircle( bubbles );
 d3.selectAll('path').style('fill', '#000');
 d3.selectAll('path').style('stroke', '#222');
 
-var dumPie = [60, 30, 10];
-$(".device-pie").sparkline(dumPie, {type: "pie", width: "50px", height: "50px", offset: "-90"});
+//var dumPie = [60, 30, 10];
+//$(".device-pie").sparkline(dumPie, {type: "pie", width: "50px", height: "50px", offset: "-90"});

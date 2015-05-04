@@ -3,7 +3,7 @@
   "dataSource": "twitter",
   "granularity": "all",
   "aggregations": [
-    {"type": "longSum", "fieldName": "tweets", "name": "tweet_count"}
+    {"type": "longSum", "fieldName": "tweets", "name": "count"}
   ],
   "filter": {
     "type": "selector", "dimension": "state", "value": "%s"

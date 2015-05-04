@@ -54,6 +54,7 @@ public class KafkaTweetStream
                 final Tweet tweet = TweetExtractor.from(status)
                                                   .extractDate()
                                                   .extractState()
+                                                  .extractTopic()
                                                   .extractLatLon()
                                                   .extractDevice()
                                                   .extractLanguage()

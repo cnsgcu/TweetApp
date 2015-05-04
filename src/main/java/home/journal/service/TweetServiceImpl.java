@@ -27,11 +27,11 @@ public class TweetServiceImpl implements TweetService
 {
     static final private Logger LOGGER = LoggerFactory.getLogger(TweetServiceImpl.class);
 
-    static final public String TWEET_COUNT_QUERY_TEMPLATE   = loadResource("query_templates/tweetCount.json");
-    static final public String RETWEET_COUNT_QUERY_TEMPLATE = loadResource("query_templates/retweetCount.json");
-    static final public String DEVICE_RANK_QUERY_TEMPLATE   = loadResource("query_templates/deviceRanking.json");
-    static final public String TOPIC_RANK_QUERY_TEMPLATE    = loadResource("query_templates/topicRanking.json");
-    static final public String LANGUAGE_RANK_QUERY_TEMPLATE = loadResource("query_templates/languageRanking.json");
+    static final public String TWEET_COUNT_QUERY_TEMPLATE          = loadResource("query_templates/tweetCount.json");
+    static final public String RETWEET_COUNT_QUERY_TEMPLATE        = loadResource("query_templates/retweetCount.json");
+    static final public String DEVICE_RANK_QUERY_TEMPLATE          = loadResource("query_templates/deviceRanking.json");
+    static final public String TOPIC_RANK_QUERY_TEMPLATE           = loadResource("query_templates/topicRanking.json");
+    static final public String LANGUAGE_RANK_QUERY_TEMPLATE        = loadResource("query_templates/languageRanking.json");
     static final public String TWEET_COUNT_BY_STATE_QUERY_TEMPLATE = loadResource("query_templates/tweetCountByState.json");
 
     static final private String URL = "http://localhost:8082/druid/v2/";
@@ -133,6 +133,8 @@ public class TweetServiceImpl implements TweetService
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
 
+            LOGGER.info("Get top N topics interval " + interval);
+
             final StringEntity entity = new StringEntity(String.format(TOPIC_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
             request.setEntity(entity);
@@ -140,7 +142,7 @@ public class TweetServiceImpl implements TweetService
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
 
-            LOGGER.info("Get top N topic response: " + resStr);
+            LOGGER.info("Get top N topics response: " + resStr);
 
             final Type listType = new TypeToken<ArrayList<TopicRankResponse>>() {}.getType();
             final List<TopicRankResponse> countResponseList = (ArrayList<TopicRankResponse>) gson.fromJson(resStr, listType);
@@ -159,6 +161,8 @@ public class TweetServiceImpl implements TweetService
         try {
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
+
+            LOGGER.info("Get top N devices interval " + interval);
 
             final StringEntity entity = new StringEntity(String.format(DEVICE_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
@@ -186,6 +190,8 @@ public class TweetServiceImpl implements TweetService
         try {
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
+
+            LOGGER.info("Get top N languages interval " + interval);
 
             final StringEntity entity = new StringEntity(String.format(LANGUAGE_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");

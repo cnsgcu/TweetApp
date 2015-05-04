@@ -159,7 +159,8 @@ public class TweetExtractor
             if (matcher.find()) {
                 tweet.setTopic(matcher.group(1));
             } else {
-                extractings.clear();
+                //extractings.clear();
+                tweet.setTopic("No topic");
             }
         };
 

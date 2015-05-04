@@ -1,5 +1,10 @@
 package home.journal.controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import home.journal.model.DeviceCount;
+import home.journal.model.LanguageCount;
+import home.journal.model.TopicCount;
 import home.journal.service.TweetService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -21,6 +27,8 @@ public class Dashboard
 
     @Autowired
     private TweetService tweetService;
+
+    final private Gson gson = new GsonBuilder().create();
 
     @RequestMapping("/")
     public String get()
@@ -49,7 +57,7 @@ public class Dashboard
                 writer.write("data: " + tweetCount + "\n\n");
                 writer.flush();
 
-                Thread.sleep(15000);
+                Thread.sleep(15_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -73,7 +81,7 @@ public class Dashboard
                 writer.write("data: " + retweetCount + "\n\n");
                 writer.flush();
 
-                Thread.sleep(10000);
+                Thread.sleep(10_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -92,14 +100,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(15);
+                final LocalDateTime secondsAgo = now.minusMinutes(1);
 
                 final long count = tweetService.getTweetCountByState(secondsAgo, now, state);
 
                 writer.write("data: " + count + "\n\n");
                 writer.flush();
 
-                Thread.sleep(15000);
+                Thread.sleep(60_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -110,16 +118,71 @@ public class Dashboard
     public void device(HttpServletResponse response)
     {
         response.setContentType("text/event-stream");
+
+        try {
+            final PrintWriter writer = response.getWriter();
+
+            while (true) {
+                final LocalDateTime now = LocalDateTime.now();
+                final LocalDateTime secondsAgo = now.minusSeconds(30);
+
+                final List<DeviceCount> deviceCounts = tweetService.getTopNDevices(secondsAgo, now);
+
+                writer.write("data: " + gson.toJson(deviceCounts) + "\n\n");
+                writer.flush();
+
+                Thread.sleep(30_000);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/statistic/language")
     public void language(HttpServletResponse response)
     {
+        response.setContentType("text/event-stream");
+
+        try {
+            final PrintWriter writer = response.getWriter();
+
+            while (true) {
+                final LocalDateTime now = LocalDateTime.now();
+                final LocalDateTime secondsAgo = now.minusSeconds(30);
+
+                final List<LanguageCount> languageCounts = tweetService.getTopNLanguages(secondsAgo, now);
+
+                writer.write("data: " + gson.toJson(languageCounts) + "\n\n");
+                writer.flush();
+
+                Thread.sleep(30_000);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @RequestMapping("/statistic/topic")
     public void topic(HttpServletResponse response)
     {
         response.setContentType("text/event-stream");
+
+        try {
+            final PrintWriter writer = response.getWriter();
+
+            while (true) {
+                final LocalDateTime now = LocalDateTime.now();
+                final LocalDateTime secondsAgo = now.minusSeconds(30);
+
+                final List<TopicCount> topicCounts = tweetService.getTopNTopics(secondsAgo, now);
+
+                writer.write("data: " + gson.toJson(topicCounts) + "\n\n");
+                writer.flush();
+
+                Thread.sleep(30_000);
+            }
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
