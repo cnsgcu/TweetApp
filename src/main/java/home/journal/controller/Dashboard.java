@@ -50,14 +50,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(15);
+                final LocalDateTime secondsAgo = now.minusMinutes(1);
 
                 final long tweetCount = tweetService.getTweetCount(secondsAgo, now);
 
                 writer.write("data: " + tweetCount + "\n\n");
                 writer.flush();
 
-                Thread.sleep(15_000);
+                Thread.sleep(2_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -74,14 +74,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(10);
+                final LocalDateTime secondsAgo = now.minusMinutes(1);
 
                 final long retweetCount = tweetService.getRetweetCount(secondsAgo, now);
 
                 writer.write("data: " + retweetCount + "\n\n");
                 writer.flush();
 
-                Thread.sleep(10_000);
+                Thread.sleep(2_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -107,7 +107,7 @@ public class Dashboard
                 writer.write("data: " + count + "\n\n");
                 writer.flush();
 
-                Thread.sleep(60_000);
+                Thread.sleep(2_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -124,14 +124,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(30);
+                final LocalDateTime secondsAgo = now.minusMinutes(30);
 
                 final List<DeviceCount> deviceCounts = tweetService.getTopNDevices(secondsAgo, now);
 
                 writer.write("data: " + gson.toJson(deviceCounts) + "\n\n");
                 writer.flush();
 
-                Thread.sleep(30_000);
+                Thread.sleep(3_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -148,14 +148,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(30);
+                final LocalDateTime secondsAgo = now.minusMinutes(30);
 
                 final List<LanguageCount> languageCounts = tweetService.getTopNLanguages(secondsAgo, now);
 
                 writer.write("data: " + gson.toJson(languageCounts) + "\n\n");
                 writer.flush();
 
-                Thread.sleep(30_000);
+                Thread.sleep(3_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
@@ -172,14 +172,14 @@ public class Dashboard
 
             while (true) {
                 final LocalDateTime now = LocalDateTime.now();
-                final LocalDateTime secondsAgo = now.minusSeconds(30);
+                final LocalDateTime secondsAgo = now.minusMinutes(30);
 
                 final List<TopicCount> topicCounts = tweetService.getTopNTopics(secondsAgo, now);
 
                 writer.write("data: " + gson.toJson(topicCounts) + "\n\n");
                 writer.flush();
 
-                Thread.sleep(30_000);
+                Thread.sleep(3_000);
             }
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

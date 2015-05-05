@@ -46,8 +46,6 @@ public class TweetServiceImpl implements TweetService
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
 
-            LOGGER.info("Tweet count interval " + interval);
-
             final StringEntity entity = new StringEntity(String.format(TWEET_COUNT_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
             request.setEntity(entity);
@@ -74,8 +72,6 @@ public class TweetServiceImpl implements TweetService
         try {
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
-
-            LOGGER.info("Retweet count interval " + interval);
 
             final StringEntity entity = new StringEntity(String.format(RETWEET_COUNT_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
@@ -104,8 +100,6 @@ public class TweetServiceImpl implements TweetService
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
 
-            LOGGER.info("Tweet count by state interval " + interval);
-
             final StringEntity entity = new StringEntity(String.format(TWEET_COUNT_BY_STATE_QUERY_TEMPLATE, state, interval));
             request.addHeader("Content-Type", "application/json");
             request.setEntity(entity);
@@ -132,8 +126,6 @@ public class TweetServiceImpl implements TweetService
         try {
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
-
-            LOGGER.info("Get top N topics interval " + interval);
 
             final StringEntity entity = new StringEntity(String.format(TOPIC_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
@@ -162,8 +154,6 @@ public class TweetServiceImpl implements TweetService
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
 
-            LOGGER.info("Get top N devices interval " + interval);
-
             final StringEntity entity = new StringEntity(String.format(DEVICE_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");
             request.setEntity(entity);
@@ -190,8 +180,6 @@ public class TweetServiceImpl implements TweetService
         try {
             final HttpPost request = new HttpPost(URL);
             final String interval = from.toString() + "/" + to.toString();
-
-            LOGGER.info("Get top N languages interval " + interval);
 
             final StringEntity entity = new StringEntity(String.format(LANGUAGE_RANK_QUERY_TEMPLATE, interval));
             request.addHeader("Content-Type", "application/json");

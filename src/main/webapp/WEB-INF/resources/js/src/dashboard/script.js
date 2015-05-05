@@ -38,8 +38,8 @@ function CountMeter(chart, url) {
 
     self.threshold = 50;
 
-    self.data = (new Array(self.threshold)).fill(0);
     self.chart = chart;
+    self.data = (new Array(self.threshold)).fill(0);
 
     self.sse = new EventSource(url);
 
@@ -58,32 +58,70 @@ CountMeter.prototype.reChart = function () {
     this.chart.sparkline(this.data, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
 };
 
-function TopMeter(url)
+function RankMeter(container, key, url)
 {
-    var self = this instanceof TopMeter
+    var self = this instanceof RankMeter
              ? this
-             : Object.create(TopMeter.prototype);
+             : Object.create(RankMeter.prototype);
 
+    self.container = container;
     self.sse = new EventSource(url);
 
     self.sse.addEventListener("message", function (msg) {
-        console.log(msg.data);
+        var data = JSON.parse(msg.data).sort(function(x,y) {
+            return -(x["count"] - y["count"]);
+        });
+
+        var divs = data.map(function (d, i) {
+            return '<div style="margin: 2px 0;">' + (i+1) + '. ' + d[key] + '</div>';
+        }).join('\n');
+
+        self.container.html(divs);
     });
 }
 
+function PieMeter(chart, url)
+{
+    var self = this instanceof PieMeter
+             ? this
+             : Object.create(PieMeter.prototype);
+
+    self.data = [];
+    self.chart = chart;
+    self.sse = new EventSource(url);
+
+    self.sse.addEventListener("message", function (msg) {
+        var data = JSON.parse(msg.data).sort(function(x,y) {
+            return -(x["count"] - y["count"]);
+        });
+
+        self.data = data.map(function (d) {
+            return d["count"];
+        });
+
+        self.reChart();
+    });
+}
+
+PieMeter.prototype.reChart = function () {
+    console.log(this.data);
+
+    this.chart.sparkline(this.data, {type: "pie", width: "50px", height: "50px", offset: "-90"});
+};
+
 // =====================================================================================================================
 
-var tweetFrq = new FrequencyMeter($("#tweet-frq"), $("#tweet-frq-chart"), "/statistic/tweet");
-var retweetFrq = new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), "/statistic/retweet");
+new FrequencyMeter($("#tweet-frq"), $("#tweet-frq-chart"), "/statistic/tweet");
+new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), "/statistic/retweet");
 
 // To have more than 6 connections to server change FireFox max persistent connections in about:config
 $('#left-analysis').find('span').map(function(idx, dom) {
     return new CountMeter($(dom), "/statistic/tweet/" + $(dom).attr('id'));
 });
 
-var top3Devices = new TopMeter("/statistic/device");
-var top5Languages = new TopMeter("/statistic/language");
-var top5Topics = new TopMeter("/statistic/topic");
+new PieMeter($("#device-chart"), "/statistic/device");
+new RankMeter($("#topic-rank"), "topic", "/statistic/topic");
+new RankMeter($("#language-rank"), "language", "/statistic/language");
 
 var bubbles = [
     //{lat: 39.099727, lng: -92.578567},
@@ -137,6 +175,3 @@ map.bigCircle( bubbles );
 
 d3.selectAll('path').style('fill', '#000');
 d3.selectAll('path').style('stroke', '#222');
-
-//var dumPie = [60, 30, 10];
-//$(".device-pie").sparkline(dumPie, {type: "pie", width: "50px", height: "50px", offset: "-90"});
