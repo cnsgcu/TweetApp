@@ -113,57 +113,72 @@ function Application(url)
     });
 }
 
-var app = new Application("/statistic");
+function TweetMap(containerId, url)
+{
+    var self = this instanceof TweetMap
+        ? this
+        : Object.create(TweetMap.prototype);
 
-var bubbles = [
-    //{lat: 39.099727, lng: -92.578567},
-    //{lat: 37.099727, lng: -92.578567},
-    //{lat: 34.099727, lng: -92.578567},
-    //{lat: 32.099727, lng: -92.578567},
-    //{lat: 31.099727, lng: -92.578567},
-    //{lat: 39.099727, lng: -94.578567}
-];
+    self.bubbleThreshold  = 1000;
+    self.bubbles = [];
 
-var map = new Datamap({
-	element: document.getElementById('map'),
-	fills: {
-		defaultFill: "#000"
-	},
-	geographyConfig: {
-        dataUrl: null, //if not null, datamaps will fetch the map JSON (currently only supports topojson)
-        hideAntarctica: true,
-        borderWidth: 1,
-        borderColor: '#222',
-        popupTemplate: function(geography, data) { //this function should just return a string
-        	return '<div class="hoverinfo"><strong>' + geography.properties.name + '</strong></div>';
+    self.tweetMap = new Datamap({
+        element: document.getElementById(containerId),
+        fills: {
+            defaultFill: "#000"
         },
-        popupOnHover: true, //disable the popup while hovering
-        highlightOnHover: true,
-        highlightFillColor: '#000',
-        highlightBorderColor: '#333',
-        highlightBorderWidth: 2
-    },
-	scope: 'usa'
-});
+        geographyConfig: {
+            dataUrl: null, //if not null, datamaps will fetch the map JSON (currently only supports topojson)
+            hideAntarctica: true,
+            borderWidth: 1,
+            borderColor: '#222',
+            popupTemplate: function(geography, data) { //this function should just return a string
+                return '<div class="hoverinfo"><strong>' + geography.properties.name + '</strong></div>';
+            },
+            popupOnHover: true, //disable the popup while hovering
+            highlightOnHover: true,
+            highlightFillColor: '#000',
+            highlightBorderColor: '#333',
+            highlightBorderWidth: 2
+        },
+        scope: 'usa'
+    });
 
-map.addPlugin('bigCircle', function ( layer, data ) {
-    var self = this;
-    var className = 'bigCircle';
-    var bubbles = layer.selectAll(className).data( data, JSON.stringify );
+    self.tweetMap.addPlugin('bigCircle', function ( layer, data ) {
+        var self = this,
+            className = 'bigCircle',
+            bubbles = layer.selectAll(className).data( data, JSON.stringify );
 
-    bubbles.enter()
-		.append('circle')
-		.attr('class', className)
-		.attr('cx', function ( datum ) {
-  			return self.latLngToXY(datum.lat, datum.lng)[0];
-		})
-		.attr('cy', function ( datum ) {
-  			return self.latLngToXY(datum.lat, datum.lng)[1];
-		})
-		.attr('r', 1.5);
-});
+        bubbles.enter()
+            .append('circle')
+            .attr('class', className)
+            .attr('cx', function ( datum ) {
+                return self.latLngToXY(datum.lat, datum.lng)[0];
+            })
+            .attr('cy', function ( datum ) {
+                return self.latLngToXY(datum.lat, datum.lng)[1];
+            })
+            .attr('r', 1.5);
+    });
 
-map.bigCircle( bubbles );
+    self.tweetMap.bigCircle( self.bubbles );
 
-d3.selectAll('path').style('fill', '#000');
-d3.selectAll('path').style('stroke', '#222');
+    d3.selectAll('path').style('fill', '#000');
+    d3.selectAll('path').style('stroke', '#222');
+
+    self.sse = new EventSource(url);
+
+    self.sse.addEventListener("message", function (msg) {
+        var point = JSON.parse(msg.data);
+
+        self.bubbles.push(point);
+        if (self.bubbles.length > self.bubbleThreshold) {
+            self.bubbles.splice(0, self.bubbles.length - self.bubbleThreshold);
+        }
+
+        self.tweetMap.bigCircle( self.bubbles );
+    });
+}
+
+var tweetMap = new TweetMap("map", "/tweet_point");
+var app = new Application("/statistic");

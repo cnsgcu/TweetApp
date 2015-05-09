@@ -6,6 +6,11 @@ import home.journal.model.LanguageCount;
 import home.journal.model.StateCount;
 import home.journal.model.TopicCount;
 import home.journal.service.TweetService;
+import kafka.consumer.Consumer;
+import kafka.consumer.ConsumerConfig;
+import kafka.consumer.KafkaStream;
+import kafka.javaapi.consumer.ConsumerConnector;
+import kafka.message.MessageAndMetadata;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -73,6 +76,37 @@ public class Dashboard
             for (ScheduledFuture<?> future : futures) {
                 future.cancel(true);
             }
+        }
+    }
+
+    @RequestMapping("/tweet_point")
+    public void map(HttpServletResponse response)
+    {
+        response.setContentType("text/event-stream");
+
+        try {
+            final PrintWriter writer = response.getWriter();
+
+            final Properties properties = new Properties();
+            properties.put("zookeeper.connect","localhost:2181");
+            properties.put("group.id","test-group");
+
+            final ConsumerConfig consumerConfig = new ConsumerConfig(properties);
+            final ConsumerConnector consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
+
+            final Map<String, Integer> topicCountMap = new HashMap<>();
+            final String TOPIC = "tweet_point";
+            topicCountMap.put(TOPIC, 1);
+
+            final Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumerConnector.createMessageStreams(topicCountMap);
+            final KafkaStream<byte[], byte[]> stream =  consumerMap.get(TOPIC).get(0);
+
+            for (MessageAndMetadata<byte[], byte[]> aStream : stream) {
+                writer.write("data: " + new String(aStream.message()) + "\n\n");
+                writer.flush();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 

@@ -1,9 +1,9 @@
-package home.journal.service;
+package home.journal.util;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import home.journal.model.Tweet;
-import home.journal.util.TweetExtractor;
+import home.journal.model.TweetPoint;
 import kafka.javaapi.producer.Producer;
 import kafka.producer.KeyedMessage;
 import kafka.producer.ProducerConfig;
@@ -25,7 +25,7 @@ public class KafkaTweetStream
         tweetStream.stream();
     }
 
-    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").setPrettyPrinting().create();
+    private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 
     public boolean stream()
     {
@@ -63,6 +63,14 @@ public class KafkaTweetStream
 
                 final String tweetStr = gson.toJson(tweet);
                 getKafkaProducer().send(new KeyedMessage<>("tweet", tweetStr));
+
+                if (tweet.getLat() != null && tweet.getLon() != null) {
+                    final TweetPoint tweetPoint = new TweetPoint();
+                    tweetPoint.setLat(tweet.getLat());
+                    tweetPoint.setLng(tweet.getLon());
+
+                    getKafkaProducer().send(new KeyedMessage<>("tweet_point", gson.toJson(tweetPoint)));
+                }
             }
         }
 

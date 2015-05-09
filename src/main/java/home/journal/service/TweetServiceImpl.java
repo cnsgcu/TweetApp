@@ -1,7 +1,6 @@
 package home.journal.service;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import home.journal.model.*;
 import org.apache.http.HttpResponse;
@@ -12,6 +11,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -27,6 +27,9 @@ public class TweetServiceImpl implements TweetService
 {
     static final private Logger LOGGER = LoggerFactory.getLogger(TweetServiceImpl.class);
 
+    @Autowired
+    private Gson gson;
+
     static final public String TWEET_COUNT_QUERY_TEMPLATE          = loadResource("query_templates/tweetCount.json");
     static final public String RETWEET_COUNT_QUERY_TEMPLATE        = loadResource("query_templates/retweetCount.json");
     static final public String DEVICE_RANK_QUERY_TEMPLATE          = loadResource("query_templates/deviceRanking.json");
@@ -35,7 +38,6 @@ public class TweetServiceImpl implements TweetService
     static final public String TWEET_COUNT_BY_STATE_QUERY_TEMPLATE = loadResource("query_templates/tweetCountByState.json");
 
     static final private String URL = "http://localhost:8082/druid/v2/";
-    static final private Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").create();
 
     final public HttpClient httpClient = HttpClientBuilder.create().build();
 
