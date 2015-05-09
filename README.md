@@ -38,7 +38,7 @@ To start Zookeeper execute the following command.
 1. Start Kafka server
 > bin/kafka-server-start.sh config/server.properties
 
-2. Create tweet and tweet_point topics
+2. Create *tweet* and *tweet_point* topics
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
 >
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet_point
