@@ -40,6 +40,7 @@ To start Zookeeper execute the following command.
 
 2. Create tweet topic
 > bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet
+> bin/kafka-topics.sh --create --zookeeper localhost:2181 --replication-factor 1 --partitions 192 --topic tweet_point
 
 #### IV. Apache Cassandra
 
