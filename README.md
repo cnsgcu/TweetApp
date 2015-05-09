@@ -114,3 +114,14 @@ druid.server.maxSize=10000000000
 
 4. Start realtime node
 > java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=twitter.spec -classpath config/_common:config/realtime:lib/* io.druid.cli.Main server realtime
+
+#### VI. Testing
+
+1. Use the following command to verify broker node is running
+> curl -XPOST -H'Content-type: application/json' "http://localhost:8082/druid/v2/?pretty" -d'{"queryType":"timeBoundary","dataSource":"twitter"}'
+
+2. Use the following command to verify  historical node is running
+> curl -XPOST -H'Content-type: application/json' "http://localhost:8083/druid/v2/?pretty" -d'{"queryType":"timeBoundary","dataSource":"twitter"}'
+
+3. Use the following command to verify  real-time node is running
+> curl -XPOST -H'Content-type: application/json' "http://localhost:8084/druid/v2/?pretty" -d'{"queryType":"timeBoundary","dataSource":"twitter"}'
