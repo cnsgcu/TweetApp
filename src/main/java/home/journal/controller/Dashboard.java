@@ -150,9 +150,9 @@ public class Dashboard
     {
         for (String state : stateCodes.values()) {
             final LocalDateTime now = LocalDateTime.now();
-            final LocalDateTime secondsAgo = now.minusMinutes(1);
+            final LocalDateTime _1minuteAgo = now.minusMinutes(1);
 
-            final long count = tweetService.getTweetCountByState(secondsAgo, now, state);
+            final long count = tweetService.getTweetCountByState(_1minuteAgo, now, state);
             final StateCount stateCount = new StateCount();
             stateCount.setState(state);
             stateCount.setCount(count);
