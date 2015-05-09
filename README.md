@@ -102,6 +102,7 @@ druid.processing.numThreads=1
 druid.segmentCache.locations=[{"path": "/tmp/druid/indexCache", "maxSize"\: 10000000000}]
 druid.server.maxSize=10000000000
 ```
+#### VI. Bootstrapping
 
 1. Start coordinator node
 > java -Xmx256m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -classpath config/_common:config/coordinator:lib/* io.druid.cli.Main server coordinator
@@ -115,7 +116,7 @@ druid.server.maxSize=10000000000
 4. Start realtime node
 > java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=twitter.spec -classpath config/_common:config/realtime:lib/* io.druid.cli.Main server realtime
 
-#### VI. Testing
+#### VII. Testing
 
 1. Use the following command to verify broker node is running
 > curl -XPOST -H'Content-type: application/json' "http://localhost:8082/druid/v2/?pretty" -d'{"queryType":"timeBoundary","dataSource":"twitter"}'
