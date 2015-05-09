@@ -18,7 +18,7 @@ html, body
 	top: 0;
 	right: 0;
 	height: 100%;
-	width: 200px;
+	min-width: 200px;
 
 	display: flex;
 	flex-direction: column;
@@ -46,7 +46,7 @@ html, body
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 170px;
+    min-width: 170px;
 	height: 100%;
 
 	font-size: 0.58em;

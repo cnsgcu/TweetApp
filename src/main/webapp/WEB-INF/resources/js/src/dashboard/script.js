@@ -1,127 +1,119 @@
-function FrequencyMeter(meter, chart, url) {
-    var self = this instanceof FrequencyMeter
-             ? this
-             : Object.create(FrequencyMeter.prototype);
-
-    self.threshold = 63;
-
-    self.data = (new Array(self.threshold)).fill(0);
-    self.meter = meter;
-    self.chart = chart;
-
-    self.sse = new EventSource(url);
-
-    self.sse.addEventListener("message", function (msg) {
-        self.data.push(msg.data);
-
-        if (self.data.length > self.threshold) {
-            self.data.splice(0, self.data.length - self.threshold);
-        }
-
-        self.reChart();
-        self.reCount();
-    });
-}
-
-FrequencyMeter.prototype.reChart = function () {
-    this.chart.sparkline(this.data, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
-};
-
-FrequencyMeter.prototype.reCount = function () {
-    this.meter.text(this.data[this.data.length - 1]);
-};
-
-function CountMeter(chart, url) {
-    var self = this instanceof CountMeter
-             ? this
-             : Object.create(CountMeter.prototype);
-
-    self.threshold = 50;
-
-    self.chart = chart;
-    self.data = (new Array(self.threshold)).fill(0);
-
-    self.sse = new EventSource(url);
-
-    self.sse.addEventListener("message", function (msg) {
-        self.data.push(msg.data);
-
-        if (self.data.length > self.threshold) {
-            self.data.splice(0, self.data.length - self.threshold);
-        }
-
-        self.reChart();
-    });
-}
-
-CountMeter.prototype.reChart = function () {
-    this.chart.sparkline(this.data, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
-};
-
-function RankMeter(container, key, url)
+function Application(url)
 {
-    var self = this instanceof RankMeter
+    var self = this instanceof Application
              ? this
-             : Object.create(RankMeter.prototype);
+             : Object.create(Application.prototype);
 
-    self.container = container;
+    self.frqThreshold = 63;
+    self.countThreshold = 50;
+
+    self.tweetMeter = $("#tweet-frq");
+    self.tweetMeterChart = $("#tweet-frq-chart");
+    self.tweetFrqHist = (new Array(self.frqThreshold)).fill(0);
+
+    self.retweetMeter = $("#retweet-frq");
+    self.retweetMeterChart = $("#retweet-frq-chart");
+    self.retweetFrqHist = (new Array(self.frqThreshold)).fill(0);
+
+    self.devicePie = $("#device-chart");
+
+    self.topicRank = $("#topic-rank");
+    self.languageRank = $("#language-rank");
+
+    self.tweetCountMap = $('#left-analysis').find('span').toArray()
+                                            .map(function(dom) {
+                                                return $(dom).attr('id');
+                                            })
+                                            .reduce(function(map, state) {
+                                                map[state] = {
+                                                    chart: $("#" + state),
+                                                    data: (new Array(self.countThreshold)).fill(0)
+                                                };
+
+                                                return map;
+                                            }, {});
+
     self.sse = new EventSource(url);
 
-    self.sse.addEventListener("message", function (msg) {
+    self.sse.addEventListener("tweet_frq", function (msg) {
+        var frq = msg.data;
+
+        self.tweetFrqHist.push(frq);
+
+        if (self.tweetFrqHist.length > self.frqThreshold) {
+            self.tweetFrqHist.splice(0, self.tweetFrqHist.length - self.frqThreshold);
+        }
+
+        self.tweetMeter.text(frq);
+        self.tweetMeterChart.sparkline(self.tweetFrqHist, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+    });
+
+    self.sse.addEventListener("retweet_frq", function (msg) {
+        var frq = msg.data;
+
+        self.retweetFrqHist.push(frq);
+
+        if (self.retweetFrqHist.length > self.frqThreshold) {
+            self.retweetFrqHist.splice(0, self.retweetFrqHist.length - self.frqThreshold);
+        }
+
+        self.retweetMeter.text(frq);
+        self.retweetMeterChart.sparkline(self.retweetFrqHist, {type: "bar", barWidth: "2.8", barColor: 'rgb(204,221,255)'});
+    });
+
+    self.sse.addEventListener("device_rank", function (msg) {
+        var data = JSON.parse(msg.data)
+                       .sort(function (x, y) {
+                           return -(x["count"] - y["count"]);
+                       })
+                       .map(function (d) {
+                           return d["count"];
+                       });
+
+        self.devicePie.sparkline(data, {type: "pie", width: "50px", height: "50px", offset: "-90"});
+    });
+
+    self.sse.addEventListener("topic_rank", function (msg) {
         var data = JSON.parse(msg.data).sort(function(x,y) {
             return -(x["count"] - y["count"]);
         });
 
         var divs = data.map(function (d, i) {
-            return '<div style="margin: 2px 0;">' + (i+1) + '. ' + d[key] + '</div>';
+            return '<div style="margin: 2px 0;">' + (i + 1) + '. ' + d["topic"] + '</div>';
         }).join('\n');
 
-        self.container.html(divs);
+        self.topicRank.html(divs);
     });
-}
 
-function PieMeter(chart, url)
-{
-    var self = this instanceof PieMeter
-             ? this
-             : Object.create(PieMeter.prototype);
-
-    self.data = [];
-    self.chart = chart;
-    self.sse = new EventSource(url);
-
-    self.sse.addEventListener("message", function (msg) {
+    self.sse.addEventListener("language_rank", function (msg) {
         var data = JSON.parse(msg.data).sort(function(x,y) {
             return -(x["count"] - y["count"]);
         });
 
-        self.data = data.map(function (d) {
-            return d["count"];
-        });
+        var divs = data.map(function (d, i) {
+            return '<div style="margin: 2px 0;">' + (i + 1) + '. ' + d["language"] + '</div>';
+        }).join('\n');
 
-        self.reChart();
+        self.languageRank.html(divs);
+    });
+
+    self.sse.addEventListener("state_tweet_count", function (msg) {
+        var data = JSON.parse(msg.data),
+            stateId = data["state"].replace(" ", "_"),
+            chart = self.tweetCountMap[stateId].chart,
+            chartData = self.tweetCountMap[stateId].data;
+
+        chartData.push(data["count"]);
+
+        if (chartData.length > self.countThreshold) {
+            chartData.splice(0, chartData.length - self.countThreshold);
+        }
+
+        chart.sparkline(chartData, {type: "line", defaultPixelsPerValue: "2", height: "10px"});
     });
 }
 
-PieMeter.prototype.reChart = function () {
-    console.log(this.data);
-
-    this.chart.sparkline(this.data, {type: "pie", width: "50px", height: "50px", offset: "-90"});
-};
-
-// =====================================================================================================================
-
-new FrequencyMeter($("#tweet-frq"), $("#tweet-frq-chart"), "/statistic/tweet");
-new FrequencyMeter($("#retweet-frq"), $("#retweet-frq-chart"), "/statistic/retweet");
-
-// To have more than 6 connections to server change FireFox max persistent connections in about:config
-$('#left-analysis').find('span').map(function(idx, dom) {
-    return new CountMeter($(dom), "/statistic/tweet/" + $(dom).attr('id'));
-});
-
-new PieMeter($("#device-chart"), "/statistic/device");
-new RankMeter($("#topic-rank"), "topic", "/statistic/topic");
-new RankMeter($("#language-rank"), "language", "/statistic/language");
+var app = new Application("/statistic");
 
 var bubbles = [
     //{lat: 39.099727, lng: -92.578567},

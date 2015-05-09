@@ -60,10 +60,8 @@ public class KafkaTweetStream
                                                   .extractLanguage()
                                                   .extractRetweetCount()
                                                   .to(new Tweet());
+
                 final String tweetStr = gson.toJson(tweet);
-
-                LOGGER.info(tweetStr);
-
                 getKafkaProducer().send(new KeyedMessage<>("tweet", tweetStr));
             }
         }

@@ -53,8 +53,6 @@ public class TweetServiceImpl implements TweetService
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
 
-            LOGGER.info("Get tweet count response: " + resStr);
-
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
@@ -79,8 +77,6 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
-
-            LOGGER.info("Get retweet count response: " + resStr);
 
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
@@ -107,8 +103,6 @@ public class TweetServiceImpl implements TweetService
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
 
-            LOGGER.info("Get tweet count by state response: " + resStr);
-
             final Type listType = new TypeToken<ArrayList<CountResponse>>() {}.getType();
             final List<CountResponse> countResponseList = (ArrayList<CountResponse>) gson.fromJson(resStr, listType);
 
@@ -133,8 +127,6 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
-
-            LOGGER.info("Get top N topics response: " + resStr);
 
             final Type listType = new TypeToken<ArrayList<TopicRankResponse>>() {}.getType();
             final List<TopicRankResponse> countResponseList = (ArrayList<TopicRankResponse>) gson.fromJson(resStr, listType);
@@ -161,8 +153,6 @@ public class TweetServiceImpl implements TweetService
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
 
-            LOGGER.info("Get top N devices response: " + resStr);
-
             final Type listType = new TypeToken<ArrayList<DeviceRankResponse>>() {}.getType();
             final List<DeviceRankResponse> countResponseList = (ArrayList<DeviceRankResponse>) gson.fromJson(resStr, listType);
 
@@ -187,8 +177,6 @@ public class TweetServiceImpl implements TweetService
 
             final HttpResponse response = httpClient.execute(request);
             final String resStr = EntityUtils.toString(response.getEntity());
-
-            LOGGER.info("Get top N languages response: " + resStr);
 
             final Type listType = new TypeToken<ArrayList<LanguageRankResponse>>() {}.getType();
             final List<LanguageRankResponse> countResponseList = (ArrayList<LanguageRankResponse>) gson.fromJson(resStr, listType);
