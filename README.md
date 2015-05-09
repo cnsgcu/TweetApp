@@ -45,7 +45,7 @@ To start Zookeeper execute the following command.
 
 #### IV. Apache Cassandra
 
-Segments and their metadata are stored in Cassandra in two tables: index_storage and descriptor_storage. Execute below statements to create the tables.
+Segments and their metadata are stored in Cassandra in two tables: *index_storage* and *descriptor_storage*. Execute below statements to create the tables.
 ```SQL
 CREATE TABLE index_storage(key text,
                            chunk text,
