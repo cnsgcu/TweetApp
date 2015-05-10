@@ -180,5 +180,5 @@ function TweetMap(containerId, url)
     });
 }
 
-var tweetMap = new TweetMap("map", "/tweet_point");
-var app = new Application("/statistic");
+new Application("/statistic");
+new TweetMap("map", "/tweet_point");

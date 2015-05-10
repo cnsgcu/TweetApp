@@ -4,6 +4,10 @@
     <head lang="en">
         <meta charset="UTF-8"/>
 
+        <link th:href="@{/resources/css/lib/font-awesome/css/font-awesome.min.css}"
+              href="../../resources/css/lib/font-awesome/css/font-awesome.min.css"
+              rel="stylesheet"/>
+
         <link th:href="@{/resources/css/src/dashboard/style.css}"
               href="../../resources/css/src/dashboard/style.css"
               rel="stylesheet" type="text/css"/>
@@ -38,8 +42,10 @@
         <div id="map"></div>
 
         <div id="right-analysis">
-            <div class="blue-glow">
-                <div style="text-align: center;">Frequency</div>
+            <div class="blue-light-glow">
+                <div style="text-align: center;">
+                    <i class="fa fa-bar-chart"></i> Frequency
+                </div>
 
                 <div style="margin: 2px 0;"><span id="tweet-frq">0</span> tweets/min</div>
                 <span id="tweet-frq-chart"></span>
@@ -48,29 +54,42 @@
                 <span id="retweet-frq-chart"></span>
             </div>
 
-            <div class="blue-glow">
-                <div style="text-align: center;">Topic</div>
+            <div class="blue-light-glow">
+                <div style="text-align: center;">
+                    <i class="fa fa-twitter"></i> Topic
+                </div>
 
                 <div id="topic-rank"></div>
             </div>
 
-            <div class="blue-glow">
-                <div style="text-align: center;">Device</div>
+            <div class="blue-light-glow">
+                <div style="text-align: center;">
+                    <i class="fa fa-server"></i> Platform
+                </div>
 
-                <div style="margin: 2px 0;">
-                    <span id="device-chart"></span>
+                <div style="display: flex;">
+                    <div style="font-size: 0.8em; padding: 2px; flex-grow: 2;">
+                        <div><i class="fa fa-apple"></i> iOS: 50</div>
+                        <div><i class="fa fa-android"></i> Android: 23</div>
+                        <div><i class="fa fa-desktop"></i> Web App: 12</div>
+                    </div>
+                    <div style="margin: 2px 0; flex-grow: 1;">
+                        <span id="device-chart"></span>
+                    </div>
                 </div>
             </div>
 
-            <div class="blue-glow">
-                <div style="text-align: center;">Language</div>
+            <div class="blue-light-glow">
+                <div style="text-align: center;">
+                    <i class="fa fa-language"></i> Language
+                </div>
 
                 <div id="language-rank"></div>
             </div>
         </div>
 
         <div id="left-analysis" style="display: flex;">
-            <div class="blue-glow">
+            <div class="blue-light-glow">
                 <div>Alabama</div>
                 <div>Alaska</div>
                 <div>Arizona</div>
