@@ -7,10 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import twitter4j.Status;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -93,7 +90,13 @@ public class TweetExtractor
 
     public TweetExtractor extractLanguage()
     {
-        final Consumer<Tweet> languageExtracting = tweet -> tweet.setLanguage(source.getLang());
+        final Consumer<Tweet> languageExtracting = tweet -> {
+            if ("und".equals(source.getLang())) {
+                tweet.setLanguage("Unknown language");
+            } else {
+                tweet.setLanguage(Locale.forLanguageTag(source.getLang()).getDisplayLanguage());
+            }
+        };
 
         extractings.add(languageExtracting);
 
@@ -160,12 +163,12 @@ public class TweetExtractor
                 final String topic = matcher.group(1).trim();
 
                 if (topic.isEmpty()) {
-                    tweet.setTopic("No topic");
+                    tweet.setTopic("Unknown topic");
                 } else {
                     tweet.setTopic(topic);
                 }
             } else {
-                tweet.setTopic("No topic");
+                tweet.setTopic("Unknown topic");
             }
         };
 

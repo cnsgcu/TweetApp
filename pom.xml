@@ -28,6 +28,7 @@
         <maven-compiler.version>3.3</maven-compiler.version>
         <maven-surefire.version>2.18.1</maven-surefire.version>
         <shrinkwrap-resolver.version>2.1.1</shrinkwrap-resolver.version>
+        <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
     </properties>
 
     <build>
@@ -50,6 +51,19 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <!-- Configure tomcat maven plugin -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>${tomcat7-maven-plugin.version}</version>
+                <configuration>
+                    <path>/</path>
+                    <systemProperties>
+                        <JAVA_OPTS>-Xmx512m</JAVA_OPTS>
+                    </systemProperties>
                 </configuration>
             </plugin>
 
