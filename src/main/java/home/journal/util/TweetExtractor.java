@@ -157,9 +157,14 @@ public class TweetExtractor
             final Matcher matcher = hashTagMatcher.matcher(source.getText());
 
             if (matcher.find()) {
-                tweet.setTopic(matcher.group(1));
+                final String topic = matcher.group(1).trim();
+
+                if (topic.isEmpty()) {
+                    tweet.setTopic("No topic");
+                } else {
+                    tweet.setTopic(topic);
+                }
             } else {
-                //extractings.clear();
                 tweet.setTopic("No topic");
             }
         };
