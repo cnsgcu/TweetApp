@@ -181,13 +181,13 @@ html, body
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #228DFF,
-    0 0 3.5px #228DFF,
-    0 0 4px #228DFF,
-    0 0 5px #228DFF,
-    0 0 7.5px #228DFF;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #228DFF,
+                 0 0 3.5px #228DFF,
+                 0 0 4px #228DFF,
+                 0 0 5px #228DFF,
+                 0 0 7.5px #228DFF;
 
 }
 
@@ -195,26 +195,26 @@ html, body
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #B6FF00,
-    0 0 3.5px #B6FF00,
-    0 0 4px #B6FF00,
-    0 0 5px #B6FF00,
-    0 0 7.5px #B6FF00;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #B6FF00,
+                 0 0 3.5px #B6FF00,
+                 0 0 4px #B6FF00,
+                 0 0 5px #B6FF00,
+                 0 0 7.5px #B6FF00;
 }
 
 .orange-light-glow
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #FF9900,
-    0 0 3.5px #FF9900,
-    0 0 4px #FF9900,
-    0 0 5px #FF9900,
-    0 0 7.5px #FF9900;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #FF9900,
+                 0 0 3.5px #FF9900,
+                 0 0 4px #FF9900,
+                 0 0 5px #FF9900,
+                 0 0 7.5px #FF9900;
 }
 
 .pink-light-glow
@@ -222,63 +222,63 @@ html, body
     color: #fff;
 
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #FF1177,
-    0 0 3.5px #FF1177,
-    0 0 4px #FF1177,
-    0 0 5px #FF1177,
-    0 0 7.5px #FF1177;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #FF1177,
+                 0 0 3.5px #FF1177,
+                 0 0 4px #FF1177,
+                 0 0 5px #FF1177,
+                 0 0 7.5px #FF1177;
 }
 
 .red-light-glow
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px red,
-    0 0 3.5px red,
-    0 0 4px red,
-    0 0 5px red,
-    0 0 7.5px red;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px red,
+                 0 0 3.5px red,
+                 0 0 4px red,
+                 0 0 5px red,
+                 0 0 7.5px red;
 }
 
 .violet-light-glow
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #ff00de,
-    0 0 3.5px #ff00de,
-    0 0 4px #ff00de,
-    0 0 5px #ff00de,
-    0 0 7.5px #ff00de;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #ff00de,
+                 0 0 3.5px #ff00de,
+                 0 0 4px #ff00de,
+                 0 0 5px #ff00de,
+                 0 0 7.5px #ff00de;
 }
 
 .white-light-glow
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px white,
-    0 0 3.5px white,
-    0 0 4px white,
-    0 0 5px white,
-    0 0 7.5px white;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px white,
+                 0 0 3.5px white,
+                 0 0 4px white,
+                 0 0 5px white,
+                 0 0 7.5px white;
 }
 
 .yellow-light-glow
 {
     color: #fff;
     text-shadow: 0 0 5px #fff,
-    0 0 10px #fff,
-    0 0 15px #fff,
-    0 0 2px #FFDD1B,
-    0 0 3.5px #FFDD1B,
-    0 0 4px #FFDD1B,
-    0 0 5px #FFDD1B,
-    0 0 7.5px #FFDD1B;
+                 0 0 10px #fff,
+                 0 0 15px #fff,
+                 0 0 2px #FFDD1B,
+                 0 0 3.5px #FFDD1B,
+                 0 0 4px #FFDD1B,
+                 0 0 5px #FFDD1B,
+                 0 0 7.5px #FFDD1B;
 }
