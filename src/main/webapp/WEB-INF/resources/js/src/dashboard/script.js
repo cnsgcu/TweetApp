@@ -16,6 +16,7 @@ function Application(url)
     self.retweetFrqHist = (new Array(self.frqThreshold)).fill(0);
 
     self.devicePie = $("#device-chart");
+    self.deviceRank = $("#device-rank");
 
     self.topicRank = $("#topic-rank");
     self.languageRank = $("#language-rank");
@@ -65,12 +66,26 @@ function Application(url)
         var data = JSON.parse(msg.data)
                        .sort(function (x, y) {
                            return -(x["count"] - y["count"]);
-                       })
-                       .map(function (d) {
-                           return d["count"];
                        });
 
-        self.devicePie.sparkline(data, {type: "pie", width: "50px", height: "50px", offset: "-90"});
+        var divs = data.map(function (d, i) {
+            var icon = "";
+
+            if (d["device"] === "iPhone") {
+                icon = "fa fa-apple";
+            } else if (d["device"] === "Android") {
+                icon = "fa fa-android";
+            } else if (d["device"] === "Web Client") {
+                icon = "fa fa-desktop";
+            } else if (d["device"] === "Instagram") {
+                icon = "fa fa-instagram";
+            }
+
+            return '<div><i class="'+ icon + '"></i> ' + d["device"] + ": " + d["count"] + '</div>';
+        }).join('\n');
+
+        self.deviceRank.html(divs);
+        self.devicePie.sparkline(data.map(function (pf) {return pf["count"]; }), {type: "pie", width: "50px", height: "50px", offset: "-90"});
     });
 
     self.sse.addEventListener("topic_rank", function (msg) {

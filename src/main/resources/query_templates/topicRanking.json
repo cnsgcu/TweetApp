@@ -4,7 +4,7 @@
   "dimension": "topic",
   "granularity": "all",
   "metric": "count",
-  "threshold": 5,
+  "threshold": 10,
   "aggregations": [
     {
       "type": "longSum",
