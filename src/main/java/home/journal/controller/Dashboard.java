@@ -95,11 +95,11 @@ public class Dashboard
             final ConsumerConnector consumerConnector = Consumer.createJavaConsumerConnector(consumerConfig);
 
             final Map<String, Integer> topicCountMap = new HashMap<>();
-            final String TOPIC = "tweet_point";
-            topicCountMap.put(TOPIC, 1);
+            final String kafkaTopic = "tweet_point";
+            topicCountMap.put(kafkaTopic, 1);
 
             final Map<String, List<KafkaStream<byte[], byte[]>>> consumerMap = consumerConnector.createMessageStreams(topicCountMap);
-            final KafkaStream<byte[], byte[]> stream =  consumerMap.get(TOPIC).get(0);
+            final KafkaStream<byte[], byte[]> stream =  consumerMap.get(kafkaTopic).get(0);
 
             for (MessageAndMetadata<byte[], byte[]> aStream : stream) {
                 writer.write("data: " + new String(aStream.message()) + "\n\n");
