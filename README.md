@@ -20,8 +20,9 @@ Download and install [Apache Kafka](http://kafka.apache.org/downloads.html), [My
 
 We are going to use Zookeeper that comes with Apache Kafka. Zookeeper server startup script is located under *\<KAFKA_DIR\>/bin* folder.
 To start Zookeeper execute the following command.
-
-> bin/zookeeper-server-start.sh config/zookeeper.properties 
+    ```Shell
+    bin/zookeeper-server-start.sh config/zookeeper.properties
+    ```
 
 #### II. MySQL
 
